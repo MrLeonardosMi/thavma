@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.init.data.providers.aspects
 
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
-import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
@@ -15,6 +14,29 @@ object ArmorAspects {
   val ironLeggings = MineralAspects.iron.mutate(Mutations.leggings(10))
   val ironBoots = MineralAspects.iron.mutate(Mutations.boots(4))
   val ironHorseArmor = MineralAspects.iron.mutate(Mutations.horseArmor(6))
+
+  val goldHelmet = MineralAspects.gold.mutate(Mutations.helmet(4))
+  val goldChestplate = MineralAspects.gold.mutate(Mutations.chestplate(10))
+  val goldLeggings = MineralAspects.gold.mutate(Mutations.leggings(6))
+  val goldBoots = MineralAspects.gold.mutate(Mutations.boots(2))
+  val goldHorseArmor = MineralAspects.gold.mutate(Mutations.horseArmor(8))
+
+  val diamondHelmet = MineralAspects.diamond.mutate(Mutations.helmet(8))
+  val diamondChestplate = MineralAspects.diamond.mutate(Mutations.chestplate(18))
+  val diamondLeggings = MineralAspects.diamond.mutate(Mutations.leggings(14))
+  val diamondBoots = MineralAspects.diamond.mutate(Mutations.boots(8))
+  val diamondHorseArmor = MineralAspects.diamond.mutate(Mutations.horseArmor(12))
+
+  private val netheriteUpgrade = MineralAspects.netherite.mutate { it.add(Aspects.PRAEMUNIO, 1) }
+  val netheriteHelmet = diamondHelmet.add(netheriteUpgrade)
+  val netheriteChestplate = diamondChestplate.add(netheriteUpgrade)
+  val netheriteLeggings = diamondLeggings.add(netheriteUpgrade)
+  val netheriteBoots = diamondBoots.add(netheriteUpgrade)
+
+  val thavmiteHelmet = MineralAspects.thavmite.mutate(Mutations.helmet(7))
+  val thavmiteChestplate = MineralAspects.thavmite.mutate(Mutations.chestplate(13))
+  val thavmiteLeggings = MineralAspects.thavmite.mutate(Mutations.leggings(11))
+  val thavmiteBoots = MineralAspects.thavmite.mutate(Mutations.boots(5))
 
   private val chainBase = MineralAspects.iron.mutate { it.scale(0.5) }
   val chainHelmet = chainBase.mutate(Mutations.helmet(4))
@@ -32,6 +54,9 @@ object ArmorAspects {
   val apprenticeChestplate = ItemAspects.fabric.mutate(Mutations.chestplate(2))
   val apprenticeLeggings = ItemAspects.fabric.mutate(Mutations.leggings(2))
   val apprenticeBoots = ItemAspects.fabric.mutate(Mutations.boots(2))
+
+  val wolfArmor = ItemAspects.armadilloScute.mutate(Mutations.wolfArmor(0))
+  val turtleHelmet = ItemAspects.turtleScute.mutate(Mutations.helmet(0))
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
@@ -57,100 +82,30 @@ object ArmorAspects {
       ironBoots.save(this, Items.IRON_BOOTS)
       ironHorseArmor.save(this, Items.IRON_HORSE_ARMOR)
 
-      item(T7Items.THAVMITE_HELMET) {
-        it.add(Aspects.METALLUM, 40)
-          .add(Aspects.AETHER, 20)
-          .add(Aspects.PRAEMUNIO, 7)
-      }
-      item(T7Items.THAVMITE_CHESTPLATE) {
-        it.add(Aspects.METALLUM, 64)
-          .add(Aspects.AETHER, 32)
-          .add(Aspects.PRAEMUNIO, 13)
-      }
-      item(T7Items.THAVMITE_LEGGINGS) {
-        it.add(Aspects.METALLUM, 56)
-          .add(Aspects.AETHER, 28)
-          .add(Aspects.PRAEMUNIO, 11)
-      }
-      item(T7Items.THAVMITE_BOOTS) {
-        it.add(Aspects.METALLUM, 32)
-          .add(Aspects.AETHER, 16)
-          .add(Aspects.PRAEMUNIO, 5)
-      }
+      goldHelmet.save(this, Items.GOLDEN_HELMET)
+      goldChestplate.save(this, Items.GOLDEN_CHESTPLATE)
+      goldLeggings.save(this, Items.GOLDEN_LEGGINGS)
+      goldBoots.save(this, Items.GOLDEN_BOOTS)
+      goldHorseArmor.save(this, Items.GOLDEN_HORSE_ARMOR)
 
-      item(Items.GOLDEN_HELMET) {
-        it.add(Aspects.METALLUM, 20)
-          .add(Aspects.PRAEMUNIO, 4)
-      }
-      item(Items.GOLDEN_CHESTPLATE) {
-        it.add(Aspects.METALLUM, 32)
-          .add(Aspects.PRAEMUNIO, 10)
-      }
-      item(Items.GOLDEN_LEGGINGS) {
-        it.add(Aspects.METALLUM, 28)
-          .add(Aspects.PRAEMUNIO, 6)
-      }
-      item(Items.GOLDEN_BOOTS) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.PRAEMUNIO, 2)
-      }
+      diamondHelmet.save(this, Items.DIAMOND_HELMET)
+      diamondChestplate.save(this, Items.DIAMOND_CHESTPLATE)
+      diamondLeggings.save(this, Items.DIAMOND_LEGGINGS)
+      diamondBoots.save(this, Items.DIAMOND_BOOTS)
+      diamondHorseArmor.save(this, Items.DIAMOND_HORSE_ARMOR)
 
-      item(Items.DIAMOND_HELMET) {
-        it.add(Aspects.VITREUS, 40)
-          .add(Aspects.PRAEMUNIO, 8)
-      }
-      item(Items.DIAMOND_CHESTPLATE) {
-        it.add(Aspects.VITREUS, 64)
-          .add(Aspects.PRAEMUNIO, 18)
-      }
-      item(Items.DIAMOND_LEGGINGS) {
-        it.add(Aspects.VITREUS, 56)
-          .add(Aspects.PRAEMUNIO, 14)
-      }
-      item(Items.DIAMOND_BOOTS) {
-        it.add(Aspects.VITREUS, 32)
-          .add(Aspects.PRAEMUNIO, 8)
-      }
+      netheriteHelmet.save(this, Items.NETHERITE_HELMET)
+      netheriteChestplate.save(this, Items.NETHERITE_CHESTPLATE)
+      netheriteLeggings.save(this, Items.NETHERITE_LEGGINGS)
+      netheriteBoots.save(this, Items.NETHERITE_BOOTS)
 
-      item(Items.NETHERITE_HELMET) {
-        it.add(Aspects.METALLUM, 40)
-          .add(Aspects.PRAEMUNIO, 9)
-          .add(Aspects.TENEBRAE, 4)
-      }
-      item(Items.NETHERITE_CHESTPLATE) {
-        it.add(Aspects.METALLUM, 64)
-          .add(Aspects.PRAEMUNIO, 19)
-          .add(Aspects.TENEBRAE, 4)
-      }
-      item(Items.NETHERITE_LEGGINGS) {
-        it.add(Aspects.METALLUM, 56)
-          .add(Aspects.PRAEMUNIO, 15)
-          .add(Aspects.TENEBRAE, 4)
-      }
-      item(Items.NETHERITE_BOOTS) {
-        it.add(Aspects.METALLUM, 32)
-          .add(Aspects.PRAEMUNIO, 9)
-          .add(Aspects.TENEBRAE, 4)
-      }
+      thavmiteHelmet.save(this, T7Items.THAVMITE_HELMET)
+      thavmiteChestplate.save(this, T7Items.THAVMITE_CHESTPLATE)
+      thavmiteLeggings.save(this, T7Items.THAVMITE_LEGGINGS)
+      thavmiteBoots.save(this, T7Items.THAVMITE_BOOTS)
 
-      item(Items.WOLF_ARMOR) {
-        it.add(Aspects.CORPUS, 8)
-          .add(Aspects.PRAEMUNIO, 6)
-      }
-      item(Items.GOLDEN_HORSE_ARMOR) {
-        it.add(Aspects.METALLUM, 8)
-          .add(Aspects.PRAEMUNIO, 8)
-      }
-      item(Items.DIAMOND_HORSE_ARMOR) {
-        it.add(Aspects.VITREUS, 16)
-          .add(Aspects.PRAEMUNIO, 12)
-      }
-
-      item(Items.TURTLE_HELMET) {
-        it.add(Aspects.CORPUS, 10)
-          .add(Aspects.PRAEMUNIO, 4)
-          .add(Aspects.AQUA, 5)
-      }
+      wolfArmor.save(this, Items.WOLF_ARMOR)
+      turtleHelmet.save(this, Items.TURTLE_HELMET)
     }
   }
 }

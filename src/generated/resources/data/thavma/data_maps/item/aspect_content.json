@@ -733,7 +733,7 @@
     },
     "minecraft:diamond_horse_armor": {
       "thavma:praemunio": 12,
-      "thavma:vitreus": 16
+      "thavma:vitreus": 56
     },
     "minecraft:diamond_leggings": {
       "thavma:praemunio": 14,
@@ -851,7 +851,7 @@
       "thavma:metallum": 8
     },
     "minecraft:golden_horse_armor": {
-      "thavma:metallum": 8,
+      "thavma:metallum": 28,
       "thavma:praemunio": 8
     },
     "minecraft:golden_leggings": {
@@ -1100,19 +1100,22 @@
       "thavma:tenebrae": 12
     },
     "minecraft:netherite_boots": {
-      "thavma:metallum": 32,
+      "thavma:metallum": 16,
       "thavma:praemunio": 9,
-      "thavma:tenebrae": 4
+      "thavma:tenebrae": 4,
+      "thavma:vitreus": 32
     },
     "minecraft:netherite_chestplate": {
-      "thavma:metallum": 64,
+      "thavma:metallum": 16,
       "thavma:praemunio": 19,
-      "thavma:tenebrae": 4
+      "thavma:tenebrae": 4,
+      "thavma:vitreus": 64
     },
     "minecraft:netherite_helmet": {
-      "thavma:metallum": 40,
+      "thavma:metallum": 16,
       "thavma:praemunio": 9,
-      "thavma:tenebrae": 4
+      "thavma:tenebrae": 4,
+      "thavma:vitreus": 40
     },
     "minecraft:netherite_hoe": {
       "thavma:instrumentum": 6,
@@ -1120,9 +1123,10 @@
       "thavma:tenebrae": 8
     },
     "minecraft:netherite_leggings": {
-      "thavma:metallum": 56,
+      "thavma:metallum": 16,
       "thavma:praemunio": 15,
-      "thavma:tenebrae": 4
+      "thavma:tenebrae": 4,
+      "thavma:vitreus": 56
     },
     "minecraft:netherite_pickaxe": {
       "thavma:instrumentum": 6,
@@ -1585,7 +1589,7 @@
     "minecraft:turtle_helmet": {
       "thavma:aqua": 5,
       "thavma:corpus": 10,
-      "thavma:praemunio": 4
+      "thavma:praemunio": 5
     },
     "minecraft:turtle_scute": {
       "thavma:aqua": 1,
@@ -1713,7 +1717,7 @@
       "thavma:instrumentum": 2
     },
     "minecraft:wolf_armor": {
-      "thavma:corpus": 8,
+      "thavma:corpus": 12,
       "thavma:praemunio": 6
     },
     "minecraft:wooden_axe": {

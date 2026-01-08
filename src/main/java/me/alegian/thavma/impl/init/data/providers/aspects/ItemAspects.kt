@@ -16,12 +16,16 @@ object ItemAspects {
   val leather = AspectGen().mutate { it.add(Aspects.CORPUS, 3) }
   val fabric = AspectGen().mutate { it.add(Aspects.FABRICO, 4).add(Aspects.AETHER, 1) }
   val arcaneLens = AspectGen().mutate { it.add(Aspects.METALLUM, 16).add(Aspects.AETHER, 2).add(Aspects.VITREUS, 2) }
+  val armadilloScute = AspectGen().mutate { it.add(Aspects.CORPUS, 2).add(Aspects.PRAEMUNIO, 1) }
+  val turtleScute = AspectGen().mutate { it.add(Aspects.CORPUS, 2).add(Aspects.PRAEMUNIO, 1).add(Aspects.AQUA, 1) }
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
       leather.save(this, Tags.Items.LEATHERS)
       fabric.save(this, T7Items.FABRIC)
       arcaneLens.save(this, T7Items.ARCANE_LENS)
+      armadilloScute.save(this, Items.ARMADILLO_SCUTE)
+      turtleScute.save(this, Items.TURTLE_SCUTE)
 
       item(Items.BLAZE_POWDER) {
         it.add(Aspects.IGNIS, 2)
@@ -59,15 +63,6 @@ object ItemAspects {
       item(Items.ROTTEN_FLESH) {
         it.add(Aspects.HOSTILIS, 2)
           .add(Aspects.CORPUS, 2)
-      }
-      item(Items.ARMADILLO_SCUTE) {
-        it.add(Aspects.CORPUS, 2)
-          .add(Aspects.PRAEMUNIO, 1)
-      }
-      item(Items.TURTLE_SCUTE) {
-        it.add(Aspects.CORPUS, 2)
-          .add(Aspects.PRAEMUNIO, 1)
-          .add(Aspects.AQUA, 1)
       }
       item(Items.FLINT) {
         it.add(Aspects.TERRA, 4)
