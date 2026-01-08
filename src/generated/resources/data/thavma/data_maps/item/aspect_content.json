@@ -92,11 +92,11 @@
     },
     "#c:ores/coal": {
       "thavma:ignis": 2,
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "#c:ores/copper": {
       "thavma:metallum": 4,
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "#c:ores/diamond": {
       "thavma:terra": 4,
@@ -108,11 +108,11 @@
     },
     "#c:ores/gold": {
       "thavma:metallum": 4,
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "#c:ores/iron": {
       "thavma:metallum": 8,
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "#c:ores/lapis": {
       "thavma:cognitio": 1,

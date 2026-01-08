@@ -2,11 +2,14 @@ package me.alegian.thavma.impl.common.aspect
 
 import com.mojang.serialization.Codec
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
+import net.minecraft.core.Holder
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.*
 import java.util.function.Consumer
 import java.util.function.Supplier
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 /**
  * Immutable.
@@ -33,6 +36,8 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return builder().copyOf(this).add(aspect, amount).build()
   }
 
+  fun add(aspectHolder: Holder<Aspect>, amount: Int) = add(aspectHolder.value(), amount)
+
   fun add(other: AspectMap): AspectMap {
     val builder = builder().copyOf(this)
     other.forEach(Consumer { aspectStack: AspectStack -> builder.add(aspectStack) })
@@ -42,6 +47,8 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
   fun subtract(aspect: Aspect, amount: Int): AspectMap {
     return builder().copyOf(this).subtract(aspect, amount).build()
   }
+
+  fun subtract(aspectHolder: Holder<Aspect>, amount: Int) = subtract(aspectHolder.value(), amount)
 
   fun subtract(other: AspectMap): AspectMap {
     val builder = builder().copyOf(this)
@@ -139,7 +146,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     }
 
     fun scale(multiplier: Number): Builder {
-      map.forEach { (k: Aspect, v: Int) -> map[k] = (v * multiplier.toDouble()).toInt() }
+      map.forEach { (k: Aspect, v: Int) -> map[k] = round(v * multiplier.toDouble()).toInt() }
       map = LinkedHashMap(map.filterValues { it > 0 })
       return this
     }
