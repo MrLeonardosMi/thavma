@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.init.data.providers.aspects
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.item.itemResourceKey
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
-import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
@@ -11,17 +11,10 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.data.DataMapProvider
-import java.util.function.UnaryOperator
 
 object MineralAspects {
   val coal = AspectGen().mutate {
@@ -111,6 +104,17 @@ object MineralAspects {
   val redstoneOre = redstone.mutate(Mutations.ORE)
   val redstoneBlock = redstone.mutate(Mutations.STORAGE_BLOCK_9)
 
+  val nugget = AspectGen().mutate { it.add(Aspects.TERRA, 1) }
+
+  val netheriteScrap = AspectGen().mutate {
+    it.add(Aspects.METALLUM, 2)
+      .add(Aspects.TERRA, 2)
+      .add(Aspects.TENEBRAE, 1)
+  }
+  val netheriteOre = netheriteScrap.mutate(Mutations.ORE)
+  val netherite = gold.mutate { it.scale(4).add(Aspects.TENEBRAE, 4) }
+  val netheriteBlock = netherite.mutate(Mutations.STORAGE_BLOCK_9)
+
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
       coal.save(this, ItemTags.COALS)
@@ -135,11 +139,11 @@ object MineralAspects {
       goldBlock.save(this, Tags.Items.STORAGE_BLOCKS_GOLD)
       rawGoldBlock.save(this, Tags.Items.STORAGE_BLOCKS_RAW_GOLD)
 
-      thavmite.save(this, key(T7Items.THAVMITE_INGOT))
-      thavmiteBlock.save(this, key(T7Blocks.THAVMITE_BLOCK))
+      thavmite.save(this, (T7Items.THAVMITE_INGOT))
+      thavmiteBlock.save(this, (T7Blocks.THAVMITE_BLOCK))
 
-      orichalcum.save(this, key(T7Items.ORICHALCUM_INGOT))
-      orichalcumBlock.save(this, key(T7Blocks.ORICHALCUM_BLOCK))
+      orichalcum.save(this, (T7Items.ORICHALCUM_INGOT))
+      orichalcumBlock.save(this, (T7Blocks.ORICHALCUM_BLOCK))
 
       diamond.save(this, Tags.Items.GEMS_DIAMOND)
       diamondOre.save(this, Tags.Items.ORES_DIAMOND)
@@ -154,88 +158,31 @@ object MineralAspects {
       lapisBlock.save(this, Tags.Items.STORAGE_BLOCKS_LAPIS)
 
       amethyst.save(this, Tags.Items.GEMS_AMETHYST)
-      amethystBlock.save(this, key(Blocks.AMETHYST_BLOCK))
+      amethystBlock.save(this, (Blocks.AMETHYST_BLOCK))
 
       quartz.save(this, Tags.Items.GEMS_QUARTZ)
       quartzOre.save(this, Tags.Items.ORES_QUARTZ)
-      quartzBlock.save(this, key(Blocks.QUARTZ_BLOCK))
+      quartzBlock.save(this, (Blocks.QUARTZ_BLOCK))
 
       glowstone.save(this, Tags.Items.DUSTS_GLOWSTONE)
-      glowstoneBlock.save(this, key(Blocks.GLOWSTONE))
+      glowstoneBlock.save(this, (Blocks.GLOWSTONE))
 
       redstone.save(this, Tags.Items.DUSTS_REDSTONE)
       redstoneOre.save(this, Tags.Items.ORES_REDSTONE)
       redstoneBlock.save(this, Tags.Items.STORAGE_BLOCKS_REDSTONE)
 
-      item(Tags.Items.ORES_NETHERITE_SCRAP) {
-        it.add(Aspects.METALLUM, 2)
-          .add(Aspects.TERRA, 6)
-          .add(Aspects.TENEBRAE, 1)
+      nugget.save(this, Tags.Items.NUGGETS)
+
+      netheriteScrap.save(this, (Items.NETHERITE_SCRAP))
+      netheriteOre.save(this, Tags.Items.ORES_NETHERITE_SCRAP)
+      netherite.save(this, Tags.Items.INGOTS_NETHERITE)
+      netheriteBlock.save(this, Tags.Items.STORAGE_BLOCKS_NETHERITE)
+
+      for (primal in Aspects.DATAGEN_PRIMALS) {
+        INFUSED_STONES[primal]?.let { add((it.itemResourceKey), AspectMap().add(primal, 4), false) }
+        INFUSED_DEEPSLATES[primal]?.let { add((it.itemResourceKey), AspectMap().add(primal, 4), false) }
+        SHARDS[primal]?.let { add((it.itemResourceKey), AspectMap().add(primal, 4), false) }
       }
-      item(Tags.Items.STORAGE_BLOCKS_NETHERITE) {
-        it.add(Aspects.METALLUM, 144)
-          .add(Aspects.TENEBRAE, 36)
-      }
-
-      for (infusedBlock in (INFUSED_STONES.values + INFUSED_DEEPSLATES.values)) {
-        item(infusedBlock) {
-          it.add(infusedBlock.get().getAspect(), 4)
-        }
-      }
-
-      item(Items.NETHERITE_SCRAP) {
-        it.add(Aspects.METALLUM, 2)
-          .add(Aspects.TERRA, 2)
-          .add(Aspects.TENEBRAE, 1)
-      }
-      item(Tags.Items.INGOTS_NETHERITE) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.TENEBRAE, 4)
-      }
-
-      for (shard in SHARDS.values) {
-        item(shard) {
-          it.add(shard.get().aspect, 4)
-        }
-      }
-
-      item(Tags.Items.NUGGETS) {
-        it.add(Aspects.TERRA, 1)
-      }
-    }
-  }
-
-  class AspectGen(private var aspects: AspectMap) {
-    constructor() : this(AspectMap())
-
-    fun mutate(mutation: UnaryOperator<AspectMap>) =
-      AspectGen(mutation.apply(aspects))
-
-    fun <T> save(builder: DataMapProvider.Builder<AspectMap, T>, tag: TagKey<T>){
-      builder.add(tag, aspects, false)
-    }
-
-    fun <T> save(builder: DataMapProvider.Builder<AspectMap, T>, key: ResourceKey<T>){
-      builder.add(key, aspects, false)
-    }
-  }
-
-  private fun key(itemLike: ItemLike): ResourceKey<Item> {
-    return BuiltInRegistries.ITEM.getResourceKey(itemLike.asItem()).orElseThrow()
-  }
-
-  object Mutations {
-    val ORE = { it: AspectMap ->
-      it.add(Aspects.TERRA, 2)
-    }
-    val RAW = { it: AspectMap ->
-      it.scale(0.5).add(Aspects.TERRA, 2)
-    }
-    val STORAGE_BLOCK_4 = { it: AspectMap ->
-      it.scale(4)
-    }
-    val STORAGE_BLOCK_9 = { it: AspectMap ->
-      it.scale(9)
     }
   }
 }

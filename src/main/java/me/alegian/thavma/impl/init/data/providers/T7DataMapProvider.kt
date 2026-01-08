@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.item.itemResourceKey
 import me.alegian.thavma.impl.init.data.providers.aspects.*
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
@@ -299,7 +300,7 @@ fun Builder<AspectMap, Item>.blockFamily(blockFamily: BlockFamily, builderConsum
 
   fun addFamilyVariant(block: Block?, multiplier: Number) {
     if (block == null) return
-    add(key(block.asItem()), aspects.scale(multiplier), false)
+    add(block.itemResourceKey, aspects.scale(multiplier), false)
   }
 
   addFamilyVariant(blockFamily.baseBlock, 1)
@@ -326,7 +327,7 @@ fun Builder<AspectMap, Item>.blockFamily(blockFamily: BlockFamily, builderConsum
 fun Builder<AspectMap, Item>.item(item: ItemLike, builderConsumer: Consumer<AspectMap.Builder>) {
   val aspectBuilder = AspectMap.builder()
   builderConsumer.accept(aspectBuilder)
-  add(key(item.asItem()), aspectBuilder.build(), false)
+  add(item.itemResourceKey, aspectBuilder.build(), false)
 }
 
 fun <T : Item> Builder<AspectMap, Item>.item(sup: Supplier<T>, builderConsumer: Consumer<AspectMap.Builder>) =
@@ -355,8 +356,4 @@ fun Builder<AspectMap, EntityType<*>>.entity(tag: TagKey<EntityType<*>>, builder
 
 private fun key(entityType: EntityType<*>): ResourceKey<EntityType<*>> {
   return BuiltInRegistries.ENTITY_TYPE.getResourceKey(entityType).orElseThrow()
-}
-
-private fun key(item: Item): ResourceKey<Item> {
-  return BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow()
 }
