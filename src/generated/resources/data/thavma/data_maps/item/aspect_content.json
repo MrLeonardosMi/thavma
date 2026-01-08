@@ -258,7 +258,8 @@
     },
     "#thavma:goggles": {
       "thavma:aether": 4,
-      "thavma:metallum": 32,
+      "thavma:instrumentum": 8,
+      "thavma:metallum": 40,
       "thavma:vitreus": 4
     },
     "minecraft:acacia_button": {
@@ -910,7 +911,7 @@
       "thavma:metallum": 16
     },
     "minecraft:iron_horse_armor": {
-      "thavma:metallum": 16,
+      "thavma:metallum": 56,
       "thavma:praemunio": 6
     },
     "minecraft:iron_leggings": {

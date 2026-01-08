@@ -10,11 +10,15 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.DataMapProvider
 import java.util.function.UnaryOperator
 
-class AspectGen(private var aspects: AspectMap) {
+class AspectGen(val aspects: AspectMap) {
   constructor() : this(AspectMap())
 
   fun mutate(mutation: UnaryOperator<AspectMap>) =
     AspectGen(mutation.apply(aspects))
+
+  fun add(other: AspectGen): AspectGen {
+    return AspectGen(aspects.add(other.aspects))
+  }
 
   fun <T> save(builder: DataMapProvider.Builder<AspectMap, T>, tag: TagKey<T>) {
     builder.add(tag, aspects, false)
@@ -40,5 +44,24 @@ object Mutations {
   }
   val STORAGE_BLOCK_9 = { it: AspectMap ->
     it.scale(9)
+  }
+
+  fun helmet(praemunio: Int) = { it: AspectMap ->
+    it.scale(5).add(Aspects.PRAEMUNIO, praemunio)
+  }
+  fun chestplate(praemunio: Int) = { it: AspectMap ->
+    it.scale(8).add(Aspects.PRAEMUNIO, praemunio)
+  }
+  fun leggings(praemunio: Int) = { it: AspectMap ->
+    it.scale(7).add(Aspects.PRAEMUNIO, praemunio)
+  }
+  fun boots(praemunio: Int) = { it: AspectMap ->
+    it.scale(4).add(Aspects.PRAEMUNIO, praemunio)
+  }
+  fun horseArmor(praemunio: Int) = { it: AspectMap ->
+    it.scale(7).add(Aspects.PRAEMUNIO, praemunio)
+  }
+  fun wolfArmor(praemunio: Int) = { it: AspectMap ->
+    it.scale(6).add(Aspects.PRAEMUNIO, praemunio)
   }
 }
