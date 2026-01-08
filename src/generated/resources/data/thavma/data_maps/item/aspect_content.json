@@ -99,11 +99,11 @@
       "thavma:terra": 2
     },
     "#c:ores/diamond": {
-      "thavma:terra": 4,
+      "thavma:terra": 2,
       "thavma:vitreus": 8
     },
     "#c:ores/emerald": {
-      "thavma:terra": 4,
+      "thavma:terra": 2,
       "thavma:vitreus": 8
     },
     "#c:ores/gold": {
@@ -116,7 +116,7 @@
     },
     "#c:ores/lapis": {
       "thavma:cognitio": 1,
-      "thavma:terra": 4,
+      "thavma:terra": 2,
       "thavma:vitreus": 4
     },
     "#c:ores/netherite_scrap": {
@@ -126,12 +126,12 @@
     },
     "#c:ores/quartz": {
       "thavma:ignis": 1,
-      "thavma:terra": 4,
+      "thavma:terra": 2,
       "thavma:vitreus": 4
     },
     "#c:ores/redstone": {
       "thavma:machina": 1,
-      "thavma:terra": 1
+      "thavma:terra": 3
     },
     "#c:raw_materials/copper": {
       "thavma:metallum": 2,
@@ -1839,7 +1839,7 @@
       "thavma:metallum": 16
     },
     "thavma:orichalcum_block": {
-      "thavma:aether": 36,
+      "thavma:instrumentum": 36,
       "thavma:metallum": 36
     },
     "thavma:orichalcum_ingot": {
