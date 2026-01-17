@@ -712,6 +712,7 @@
       "thavma:terra": 2
     },
     "minecraft:diamond_axe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 24
     },
@@ -728,6 +729,7 @@
       "thavma:vitreus": 40
     },
     "minecraft:diamond_hoe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 16
     },
@@ -740,14 +742,17 @@
       "thavma:vitreus": 56
     },
     "minecraft:diamond_pickaxe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 24
     },
     "minecraft:diamond_shovel": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 8
     },
     "minecraft:diamond_sword": {
+      "thavma:herba": 2,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 16
     },
@@ -831,6 +836,7 @@
       "thavma:terra": 4
     },
     "minecraft:golden_axe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
       "thavma:metallum": 12
     },
@@ -847,6 +853,7 @@
       "thavma:praemunio": 4
     },
     "minecraft:golden_hoe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
       "thavma:metallum": 8
     },
@@ -859,14 +866,17 @@
       "thavma:praemunio": 6
     },
     "minecraft:golden_pickaxe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
       "thavma:metallum": 12
     },
     "minecraft:golden_shovel": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
       "thavma:metallum": 4
     },
     "minecraft:golden_sword": {
+      "thavma:herba": 2,
       "thavma:instrumentum": 2,
       "thavma:metallum": 8
     },
@@ -891,6 +901,7 @@
       "thavma:metallum": 16
     },
     "minecraft:iron_axe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 3,
       "thavma:metallum": 24
     },
@@ -907,6 +918,7 @@
       "thavma:praemunio": 4
     },
     "minecraft:iron_hoe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 3,
       "thavma:metallum": 16
     },
@@ -919,14 +931,17 @@
       "thavma:praemunio": 10
     },
     "minecraft:iron_pickaxe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 3,
       "thavma:metallum": 24
     },
     "minecraft:iron_shovel": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 3,
       "thavma:metallum": 8
     },
     "minecraft:iron_sword": {
+      "thavma:herba": 2,
       "thavma:instrumentum": 3,
       "thavma:metallum": 16
     },
@@ -1095,6 +1110,7 @@
       "thavma:ignis": 2
     },
     "minecraft:netherite_axe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 6,
       "thavma:metallum": 48,
       "thavma:tenebrae": 12
@@ -1118,6 +1134,7 @@
       "thavma:vitreus": 40
     },
     "minecraft:netherite_hoe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 6,
       "thavma:metallum": 32,
       "thavma:tenebrae": 8
@@ -1129,6 +1146,7 @@
       "thavma:vitreus": 56
     },
     "minecraft:netherite_pickaxe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 6,
       "thavma:metallum": 48,
       "thavma:tenebrae": 12
@@ -1139,11 +1157,13 @@
       "thavma:terra": 2
     },
     "minecraft:netherite_shovel": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 6,
       "thavma:metallum": 16,
       "thavma:tenebrae": 4
     },
     "minecraft:netherite_sword": {
+      "thavma:herba": 2,
       "thavma:instrumentum": 6,
       "thavma:metallum": 32,
       "thavma:tenebrae": 8
@@ -1883,6 +1903,7 @@
     },
     "thavma:thavmite_axe": {
       "thavma:aether": 12,
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:metallum": 24
     },
@@ -1902,6 +1923,7 @@
     },
     "thavma:thavmite_hammer": {
       "thavma:aether": 24,
+      "thavma:herba": 2,
       "thavma:instrumentum": 4,
       "thavma:metallum": 48
     },
@@ -1912,6 +1934,7 @@
     },
     "thavma:thavmite_hoe": {
       "thavma:aether": 8,
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:metallum": 16
     },
@@ -1926,6 +1949,7 @@
     },
     "thavma:thavmite_pickaxe": {
       "thavma:aether": 12,
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:metallum": 24
     },
@@ -1935,11 +1959,13 @@
     },
     "thavma:thavmite_shovel": {
       "thavma:aether": 4,
+      "thavma:herba": 4,
       "thavma:instrumentum": 4,
       "thavma:metallum": 8
     },
     "thavma:thavmite_sword": {
       "thavma:aether": 8,
+      "thavma:herba": 2,
       "thavma:instrumentum": 4,
       "thavma:metallum": 16
     }

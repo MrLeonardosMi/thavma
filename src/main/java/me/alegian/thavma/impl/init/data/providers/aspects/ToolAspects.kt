@@ -11,6 +11,49 @@ import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 object ToolAspects {
+  val ironSword = MineralAspects.iron.mutate(Mutations.sword(ItemAspects.rodsWooden, 3))
+  val ironPickaxe = MineralAspects.iron.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 3))
+  val ironAxe = MineralAspects.iron.mutate(Mutations.axe(ItemAspects.rodsWooden, 3))
+  val ironShovel = MineralAspects.iron.mutate(Mutations.shovel(ItemAspects.rodsWooden, 3))
+  val ironHoe = MineralAspects.iron.mutate(Mutations.hoe(ItemAspects.rodsWooden, 3))
+
+  val thavmiteSword = MineralAspects.thavmite.mutate(Mutations.sword(ItemAspects.rodsWooden, 4))
+  val thavmitePickaxe = MineralAspects.thavmite.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 4))
+  val thavmiteAxe = MineralAspects.thavmite.mutate(Mutations.axe(ItemAspects.rodsWooden, 4))
+  val thavmiteShovel = MineralAspects.thavmite.mutate(Mutations.shovel(ItemAspects.rodsWooden, 4))
+  val thavmiteHoe = MineralAspects.thavmite.mutate(Mutations.hoe(ItemAspects.rodsWooden, 4))
+  val thavmiteHammer = MineralAspects.thavmite.mutate(Mutations.hammer(ItemAspects.rodsWooden, 4))
+
+  val goldenSword = MineralAspects.gold.mutate(Mutations.sword(ItemAspects.rodsWooden, 2))
+  val goldenPickaxe = MineralAspects.gold.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 2))
+  val goldenAxe = MineralAspects.gold.mutate(Mutations.axe(ItemAspects.rodsWooden, 2))
+  val goldenShovel = MineralAspects.gold.mutate(Mutations.shovel(ItemAspects.rodsWooden, 2))
+  val goldenHoe = MineralAspects.gold.mutate(Mutations.hoe(ItemAspects.rodsWooden, 2))
+
+  val diamondSword = MineralAspects.diamond.mutate(Mutations.sword(ItemAspects.rodsWooden, 4))
+  val diamondPickaxe = MineralAspects.diamond.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 4))
+  val diamondAxe = MineralAspects.diamond.mutate(Mutations.axe(ItemAspects.rodsWooden, 4))
+  val diamondShovel = MineralAspects.diamond.mutate(Mutations.shovel(ItemAspects.rodsWooden, 4))
+  val diamondHoe = MineralAspects.diamond.mutate(Mutations.hoe(ItemAspects.rodsWooden, 4))
+
+  val netheriteSword = MineralAspects.netherite.mutate(Mutations.sword(ItemAspects.rodsWooden, 6))
+  val netheritePickaxe = MineralAspects.netherite.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 6))
+  val netheriteAxe = MineralAspects.netherite.mutate(Mutations.axe(ItemAspects.rodsWooden, 6))
+  val netheriteShovel = MineralAspects.netherite.mutate(Mutations.shovel(ItemAspects.rodsWooden, 6))
+  val netheriteHoe = MineralAspects.netherite.mutate(Mutations.hoe(ItemAspects.rodsWooden, 6))
+
+  val ironPlating = MineralAspects.iron.mutate(Mutations.PLATING)
+  val goldPlating = MineralAspects.gold.mutate(Mutations.PLATING)
+  val orichalcumPlating = MineralAspects.orichalcum.mutate(Mutations.PLATING)
+  val thavmitePlating = MineralAspects.thavmite.mutate(Mutations.PLATING)
+
+  val arrows = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 2) }
+  val mace = AspectGen().mutate { it.add(Aspects.METALLUM, 16).add(Aspects.AETHER, 8) }
+  val trident = AspectGen().mutate { it.add(Aspects.METALLUM, 12).add(Aspects.AQUA, 8) }
+  val bow = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 8).add(Aspects.HERBA, 2).add(Aspects.FABRICO, 2) }
+  val crossbow = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 8).add(Aspects.METALLUM, 4).add(Aspects.FABRICO, 2) }
+  val totemOfUndying = AspectGen().mutate { it.add(Aspects.VICTUS, 16).add(Aspects.AETHER, 8) }
+
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
       item(Items.WOODEN_SWORD) {
@@ -55,166 +98,48 @@ object ToolAspects {
           .add(Aspects.INSTRUMENTUM, 2)
       }
 
-      item(Items.IRON_SWORD) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.INSTRUMENTUM, 3)
-      }
-      item(Items.IRON_PICKAXE) {
-        it.add(Aspects.METALLUM, 24)
-          .add(Aspects.INSTRUMENTUM, 3)
-      }
-      item(Items.IRON_AXE) {
-        it.add(Aspects.METALLUM, 24)
-          .add(Aspects.INSTRUMENTUM, 3)
-      }
-      item(Items.IRON_SHOVEL) {
-        it.add(Aspects.METALLUM, 8)
-          .add(Aspects.INSTRUMENTUM, 3)
-      }
-      item(Items.IRON_HOE) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.INSTRUMENTUM, 3)
-      }
+      ironSword.save(this, Items.IRON_SWORD)
+      ironPickaxe.save(this, Items.IRON_PICKAXE)
+      ironAxe.save(this, Items.IRON_AXE)
+      ironShovel.save(this, Items.IRON_SHOVEL)
+      ironHoe.save(this, Items.IRON_HOE)
 
-      item(T7Items.THAVMITE_SWORD) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.AETHER, 8)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(T7Items.THAVMITE_PICKAXE) {
-        it.add(Aspects.METALLUM, 24)
-          .add(Aspects.AETHER, 12)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(T7Items.THAVMITE_AXE) {
-        it.add(Aspects.METALLUM, 24)
-          .add(Aspects.AETHER, 12)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(T7Items.THAVMITE_SHOVEL) {
-        it.add(Aspects.METALLUM, 8)
-          .add(Aspects.AETHER, 4)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(T7Items.THAVMITE_HOE) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.AETHER, 8)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(T7Items.THAVMITE_HAMMER) {
-        it.add(Aspects.METALLUM, 48)
-          .add(Aspects.AETHER, 24)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
+      thavmiteSword.save(this, T7Items.THAVMITE_SWORD)
+      thavmitePickaxe.save(this, T7Items.THAVMITE_PICKAXE)
+      thavmiteAxe.save(this, T7Items.THAVMITE_AXE)
+      thavmiteShovel.save(this, T7Items.THAVMITE_SHOVEL)
+      thavmiteHoe.save(this, T7Items.THAVMITE_HOE)
+      thavmiteHammer.save(this, T7Items.THAVMITE_HAMMER)
 
-      item(Items.GOLDEN_SWORD) {
-        it.add(Aspects.METALLUM, 8)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.GOLDEN_PICKAXE) {
-        it.add(Aspects.METALLUM, 12)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.GOLDEN_AXE) {
-        it.add(Aspects.METALLUM, 12)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.GOLDEN_SHOVEL) {
-        it.add(Aspects.METALLUM, 4)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.GOLDEN_HOE) {
-        it.add(Aspects.METALLUM, 8)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
+      goldenSword.save(this, Items.GOLDEN_SWORD)
+      goldenPickaxe.save(this, Items.GOLDEN_PICKAXE)
+      goldenAxe.save(this, Items.GOLDEN_AXE)
+      goldenShovel.save(this, Items.GOLDEN_SHOVEL)
+      goldenHoe.save(this, Items.GOLDEN_HOE)
 
-      item(Items.DIAMOND_SWORD) {
-        it.add(Aspects.VITREUS, 16)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(Items.DIAMOND_PICKAXE) {
-        it.add(Aspects.VITREUS, 24)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(Items.DIAMOND_AXE) {
-        it.add(Aspects.VITREUS, 24)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(Items.DIAMOND_SHOVEL) {
-        it.add(Aspects.VITREUS, 8)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
-      item(Items.DIAMOND_HOE) {
-        it.add(Aspects.VITREUS, 16)
-          .add(Aspects.INSTRUMENTUM, 4)
-      }
+      diamondSword.save(this, Items.DIAMOND_SWORD)
+      diamondPickaxe.save(this, Items.DIAMOND_PICKAXE)
+      diamondAxe.save(this, Items.DIAMOND_AXE)
+      diamondShovel.save(this, Items.DIAMOND_SHOVEL)
+      diamondHoe.save(this, Items.DIAMOND_HOE)
 
-      item(Items.NETHERITE_SWORD) {
-        it.add(Aspects.METALLUM, 32)
-          .add(Aspects.INSTRUMENTUM, 6)
-          .add(Aspects.TENEBRAE, 8)
-      }
-      item(Items.NETHERITE_PICKAXE) {
-        it.add(Aspects.METALLUM, 48)
-          .add(Aspects.INSTRUMENTUM, 6)
-          .add(Aspects.TENEBRAE, 12)
-      }
-      item(Items.NETHERITE_AXE) {
-        it.add(Aspects.METALLUM, 48)
-          .add(Aspects.INSTRUMENTUM, 6)
-          .add(Aspects.TENEBRAE, 12)
-      }
-      item(Items.NETHERITE_SHOVEL) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.INSTRUMENTUM, 6)
-          .add(Aspects.TENEBRAE, 4)
-      }
-      item(Items.NETHERITE_HOE) {
-        it.add(Aspects.METALLUM, 32)
-          .add(Aspects.INSTRUMENTUM, 6)
-          .add(Aspects.TENEBRAE, 8)
-      }
+      netheriteSword.save(this, Items.NETHERITE_SWORD)
+      netheritePickaxe.save(this, Items.NETHERITE_PICKAXE)
+      netheriteAxe.save(this, Items.NETHERITE_AXE)
+      netheriteShovel.save(this, Items.NETHERITE_SHOVEL)
+      netheriteHoe.save(this, Items.NETHERITE_HOE)
 
-      item(T7Items.IRON_PLATING) {
-        it.add(Aspects.METALLUM, 16)
-      }
-      item(T7Items.GOLD_PLATING) {
-        it.add(Aspects.METALLUM, 8)
-      }
-      item(T7Items.ORICHALCUM_PLATING) {
-        it.add(Aspects.METALLUM, 8)
-          .add(Aspects.INSTRUMENTUM, 8)
-      }
-      item(T7Items.THAVMITE_PLATING) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.AETHER, 8)
-      }
+      ironPlating.save(this, T7Items.IRON_PLATING)
+      goldPlating.save(this, T7Items.GOLD_PLATING)
+      orichalcumPlating.save(this, T7Items.ORICHALCUM_PLATING)
+      thavmitePlating.save(this, T7Items.THAVMITE_PLATING)
 
-      item(ItemTags.ARROWS) {
-        it.add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.MACE) {
-        it.add(Aspects.METALLUM, 16)
-          .add(Aspects.AETHER, 8)
-      }
-      item(Items.TRIDENT) {
-        it.add(Aspects.METALLUM, 12)
-          .add(Aspects.AQUA, 8)
-      }
-      item(Tags.Items.TOOLS_BOW) {
-        it.add(Aspects.INSTRUMENTUM, 8)
-          .add(Aspects.HERBA, 2)
-          .add(Aspects.FABRICO, 2)
-      }
-      item(Tags.Items.TOOLS_CROSSBOW) {
-        it.add(Aspects.INSTRUMENTUM, 8)
-          .add(Aspects.METALLUM, 4)
-          .add(Aspects.FABRICO, 2)
-      }
-      item(Items.TOTEM_OF_UNDYING) {
-        it.add(Aspects.VICTUS, 16)
-          .add(Aspects.AETHER, 8)
-      }
+      arrows.save(this, ItemTags.ARROWS)
+      mace.save(this, Items.MACE)
+      trident.save(this, Items.TRIDENT)
+      bow.save(this, Tags.Items.TOOLS_BOW)
+      crossbow.save(this, Tags.Items.TOOLS_CROSSBOW)
+      totemOfUndying.save(this, Items.TOTEM_OF_UNDYING)
     }
   }
 }

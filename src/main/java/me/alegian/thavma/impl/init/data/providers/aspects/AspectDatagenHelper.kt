@@ -45,23 +45,55 @@ object Mutations {
   val STORAGE_BLOCK_9 = { it: AspectMap ->
     it.scale(9)
   }
+  val PLATING = { it: AspectMap ->
+    it.scale(2)
+  }
 
   fun helmet(praemunio: Int) = { it: AspectMap ->
     it.scale(5).add(Aspects.PRAEMUNIO, praemunio)
   }
+
   fun chestplate(praemunio: Int) = { it: AspectMap ->
     it.scale(8).add(Aspects.PRAEMUNIO, praemunio)
   }
+
   fun leggings(praemunio: Int) = { it: AspectMap ->
     it.scale(7).add(Aspects.PRAEMUNIO, praemunio)
   }
+
   fun boots(praemunio: Int) = { it: AspectMap ->
     it.scale(4).add(Aspects.PRAEMUNIO, praemunio)
   }
+
   fun horseArmor(praemunio: Int) = { it: AspectMap ->
     it.scale(7).add(Aspects.PRAEMUNIO, praemunio)
   }
+
   fun wolfArmor(praemunio: Int) = { it: AspectMap ->
     it.scale(6).add(Aspects.PRAEMUNIO, praemunio)
+  }
+
+  fun sword(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->
+    it.scale(2).add(stick.aspects).add(Aspects.INSTRUMENTUM, instrumentum)
+  }
+
+  fun pickaxe(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->
+    it.scale(3).add(stick.aspects.scale(2)).add(Aspects.INSTRUMENTUM, instrumentum)
+  }
+
+  fun axe(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->
+    it.scale(3).add(stick.aspects.scale(2)).add(Aspects.INSTRUMENTUM, instrumentum)
+  }
+
+  fun hoe(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->
+    it.scale(2).add(stick.aspects.scale(2)).add(Aspects.INSTRUMENTUM, instrumentum)
+  }
+
+  fun shovel(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->
+    it.scale(1).add(stick.aspects.scale(2)).add(Aspects.INSTRUMENTUM, instrumentum)
+  }
+
+  fun hammer(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->
+    it.scale(6).add(stick.aspects).add(Aspects.INSTRUMENTUM, instrumentum)
   }
 }
