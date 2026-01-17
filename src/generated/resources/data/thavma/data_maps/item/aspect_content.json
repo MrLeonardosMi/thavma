@@ -1508,8 +1508,9 @@
       "thavma:terra": 2
     },
     "minecraft:stone_axe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
-      "thavma:terra": 12
+      "thavma:terra": 6
     },
     "minecraft:stone_brick_slab": {
       "thavma:terra": 1
@@ -1527,19 +1528,22 @@
       "thavma:terra": 2
     },
     "minecraft:stone_hoe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:stone_pickaxe": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
-      "thavma:terra": 12
+      "thavma:terra": 6
     },
     "minecraft:stone_pressure_plate": {
       "thavma:terra": 4
     },
     "minecraft:stone_shovel": {
+      "thavma:herba": 4,
       "thavma:instrumentum": 2,
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "minecraft:stone_slab": {
       "thavma:terra": 1
@@ -1548,8 +1552,9 @@
       "thavma:terra": 2
     },
     "minecraft:stone_sword": {
+      "thavma:herba": 2,
       "thavma:instrumentum": 2,
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:sugar": {
       "thavma:herba": 2,
@@ -1741,7 +1746,7 @@
       "thavma:praemunio": 6
     },
     "minecraft:wooden_axe": {
-      "thavma:herba": 12,
+      "thavma:herba": 10,
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_hoe": {
@@ -1749,15 +1754,15 @@
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_pickaxe": {
-      "thavma:herba": 12,
+      "thavma:herba": 10,
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_shovel": {
-      "thavma:herba": 4,
+      "thavma:herba": 6,
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_sword": {
-      "thavma:herba": 8,
+      "thavma:herba": 6,
       "thavma:instrumentum": 1
     },
     "thavma:aether_infused_deepslate": {

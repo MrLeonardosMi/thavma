@@ -49,6 +49,23 @@ object Mutations {
     it.scale(2)
   }
 
+  val BUTTON = { it: AspectMap -> it.scale(1) }
+  val CHISELED = { it: AspectMap -> it.scale(1) }
+  val CRACKED = { it: AspectMap -> it.scale(1) }
+  val CUT = { it: AspectMap -> it.scale(1) }
+  val MOSAIC = { it: AspectMap -> it.scale(1) }
+  val STAIRS = { it: AspectMap -> it.scale(1) }
+  val POLISHED = { it: AspectMap -> it.scale(1) }
+  val WALL = { it: AspectMap -> it.scale(1) }
+  val DOOR = { it: AspectMap -> it.scale(2) }
+  val SIGN = { it: AspectMap -> it.scale(2) }
+  val PRESSURE_PLATE = { it: AspectMap -> it.scale(2) }
+  val WALL_SIGN = { it: AspectMap -> it.scale(2) }
+  val FENCE = { it: AspectMap -> it.scale(1.5) }
+  val FENCE_GATE = { it: AspectMap -> it.scale(4) }
+  val SLAB = { it: AspectMap -> it.scale(0.5) }
+  val TRAPDOOR = { it: AspectMap -> it.scale(3) }
+
   fun helmet(praemunio: Int) = { it: AspectMap ->
     it.scale(5).add(Aspects.PRAEMUNIO, praemunio)
   }

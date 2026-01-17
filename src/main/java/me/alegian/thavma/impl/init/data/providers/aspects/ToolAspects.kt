@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.init.data.providers.aspects
 
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
-import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -11,6 +10,18 @@ import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 object ToolAspects {
+  val woodenSword = BlockFamilyAspects.oakPlanks.mutate(Mutations.sword(ItemAspects.rodsWooden, 1))
+  val woodenPickaxe = BlockFamilyAspects.oakPlanks.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 1))
+  val woodenAxe = BlockFamilyAspects.oakPlanks.mutate(Mutations.axe(ItemAspects.rodsWooden, 1))
+  val woodenShovel = BlockFamilyAspects.oakPlanks.mutate(Mutations.shovel(ItemAspects.rodsWooden, 1))
+  val woodenHoe = BlockFamilyAspects.oakPlanks.mutate(Mutations.hoe(ItemAspects.rodsWooden, 1))
+
+  val stoneSword = BlockFamilyAspects.cobblestone.mutate(Mutations.sword(ItemAspects.rodsWooden, 2))
+  val stonePickaxe = BlockFamilyAspects.cobblestone.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 2))
+  val stoneAxe = BlockFamilyAspects.cobblestone.mutate(Mutations.axe(ItemAspects.rodsWooden, 2))
+  val stoneShovel = BlockFamilyAspects.cobblestone.mutate(Mutations.shovel(ItemAspects.rodsWooden, 2))
+  val stoneHoe = BlockFamilyAspects.cobblestone.mutate(Mutations.hoe(ItemAspects.rodsWooden, 2))
+
   val ironSword = MineralAspects.iron.mutate(Mutations.sword(ItemAspects.rodsWooden, 3))
   val ironPickaxe = MineralAspects.iron.mutate(Mutations.pickaxe(ItemAspects.rodsWooden, 3))
   val ironAxe = MineralAspects.iron.mutate(Mutations.axe(ItemAspects.rodsWooden, 3))
@@ -56,47 +67,17 @@ object ToolAspects {
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
-      item(Items.WOODEN_SWORD) {
-        it.add(Aspects.HERBA, 8)
-          .add(Aspects.INSTRUMENTUM, 1)
-      }
-      item(Items.WOODEN_PICKAXE) {
-        it.add(Aspects.HERBA, 12)
-          .add(Aspects.INSTRUMENTUM, 1)
-      }
-      item(Items.WOODEN_AXE) {
-        it.add(Aspects.HERBA, 12)
-          .add(Aspects.INSTRUMENTUM, 1)
-      }
-      item(Items.WOODEN_SHOVEL) {
-        it.add(Aspects.HERBA, 4)
-          .add(Aspects.INSTRUMENTUM, 1)
-      }
-      item(Items.WOODEN_HOE) {
-        it.add(Aspects.HERBA, 8)
-          .add(Aspects.INSTRUMENTUM, 1)
-      }
+      woodenSword.save(this, Items.WOODEN_SWORD)
+      woodenPickaxe.save(this, Items.WOODEN_PICKAXE)
+      woodenAxe.save(this, Items.WOODEN_AXE)
+      woodenShovel.save(this, Items.WOODEN_SHOVEL)
+      woodenHoe.save(this, Items.WOODEN_HOE)
 
-      item(Items.STONE_SWORD) {
-        it.add(Aspects.TERRA, 8)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.STONE_PICKAXE) {
-        it.add(Aspects.TERRA, 12)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.STONE_AXE) {
-        it.add(Aspects.TERRA, 12)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.STONE_SHOVEL) {
-        it.add(Aspects.TERRA, 4)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
-      item(Items.STONE_HOE) {
-        it.add(Aspects.TERRA, 8)
-          .add(Aspects.INSTRUMENTUM, 2)
-      }
+      stoneSword.save(this, Items.STONE_SWORD)
+      stonePickaxe.save(this, Items.STONE_PICKAXE)
+      stoneAxe.save(this, Items.STONE_AXE)
+      stoneShovel.save(this, Items.STONE_SHOVEL)
+      stoneHoe.save(this, Items.STONE_HOE)
 
       ironSword.save(this, Items.IRON_SWORD)
       ironPickaxe.save(this, Items.IRON_PICKAXE)
