@@ -531,7 +531,7 @@
       "thavma:terra": 1
     },
     "minecraft:coarse_dirt": {
-      "thavma:terra": 1
+      "thavma:terra": 2
     },
     "minecraft:cobbled_deepslate": {
       "thavma:terra": 2
@@ -1214,8 +1214,10 @@
       "thavma:metallum": 36
     },
     "minecraft:packed_mud": {
+      "thavma:aqua": 1,
       "thavma:herba": 2,
-      "thavma:terra": 2
+      "thavma:terra": 1,
+      "thavma:victus": 2
     },
     "minecraft:paper": {
       "thavma:cognitio": 1,
@@ -1805,7 +1807,7 @@
     },
     "thavma:arcane_workbench": {
       "thavma:aether": 2,
-      "thavma:fabrico": 12,
+      "thavma:fabrico": 8,
       "thavma:herba": 4
     },
     "thavma:cracked_elemental_stone": {

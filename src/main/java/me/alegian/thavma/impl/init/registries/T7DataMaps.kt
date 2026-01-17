@@ -10,13 +10,14 @@ import net.neoforged.neoforge.registries.datamaps.DataMapValueMerger
 
 object T7DataMaps {
   object AspectContent {
-    val ITEM = DataMapType
+    val ITEM = AdvancedDataMapType
       .builder(
         rl("aspect_content"),
         Registries.ITEM,
         AspectMap.CODEC
       )
       .synced(AspectMap.CODEC, true)
+      .merger(hierarchicalMerger())
       .build()
 
     val ENTITY = DataMapType
@@ -38,4 +39,13 @@ object T7DataMaps {
     .synced(Aspect.CODEC.listOf(), true)
     .merger(DataMapValueMerger.listMerger())
     .build()
+
+  // prioritizes resourcekeys before tags
+  fun <T, R> hierarchicalMerger(): DataMapValueMerger<R, T> {
+    return DataMapValueMerger<R, T> { _, first, firstValue, second, secondValue ->
+      if (second.right().isPresent) secondValue
+      else if (first.right().isPresent) firstValue
+      else secondValue
+    }
+  }
 }

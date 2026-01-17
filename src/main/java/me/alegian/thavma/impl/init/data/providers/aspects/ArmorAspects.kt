@@ -44,19 +44,19 @@ object ArmorAspects {
   val chainLeggings = chainBase.mutate(Mutations.leggings(8))
   val chainBoots = chainBase.mutate(Mutations.boots(2))
 
-  val leatherHelmet = ItemAspects.leather.mutate(Mutations.helmet(2))
-  val leatherChestplate = ItemAspects.leather.mutate(Mutations.chestplate(6))
-  val leatherLeggings = ItemAspects.leather.mutate(Mutations.leggings(4))
-  val leatherBoots = ItemAspects.leather.mutate(Mutations.boots(2))
-  val leatherHorseArmor = ItemAspects.leather.mutate(Mutations.horseArmor(4))
+  val leatherHelmet = BlockAndItemAspects.leather.mutate(Mutations.helmet(2))
+  val leatherChestplate = BlockAndItemAspects.leather.mutate(Mutations.chestplate(6))
+  val leatherLeggings = BlockAndItemAspects.leather.mutate(Mutations.leggings(4))
+  val leatherBoots = BlockAndItemAspects.leather.mutate(Mutations.boots(2))
+  val leatherHorseArmor = BlockAndItemAspects.leather.mutate(Mutations.horseArmor(4))
 
-  val goggles = ItemAspects.arcaneLens.mutate { it.scale(2) }.add(MineralAspects.orichalcum.mutate { it.scale(2) })
-  val apprenticeChestplate = ItemAspects.fabric.mutate(Mutations.chestplate(2))
-  val apprenticeLeggings = ItemAspects.fabric.mutate(Mutations.leggings(2))
-  val apprenticeBoots = ItemAspects.fabric.mutate(Mutations.boots(2))
+  val goggles = BlockAndItemAspects.arcaneLens.mutate { it.scale(2) }.add(MineralAspects.orichalcum.mutate { it.scale(2) })
+  val apprenticeChestplate = BlockAndItemAspects.fabric.mutate(Mutations.chestplate(2))
+  val apprenticeLeggings = BlockAndItemAspects.fabric.mutate(Mutations.leggings(2))
+  val apprenticeBoots = BlockAndItemAspects.fabric.mutate(Mutations.boots(2))
 
-  val wolfArmor = ItemAspects.armadilloScute.mutate(Mutations.wolfArmor(0))
-  val turtleHelmet = ItemAspects.turtleScute.mutate(Mutations.helmet(0))
+  val wolfArmor = BlockAndItemAspects.armadilloScute.mutate(Mutations.wolfArmor(0))
+  val turtleHelmet = BlockAndItemAspects.turtleScute.mutate(Mutations.helmet(0))
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {

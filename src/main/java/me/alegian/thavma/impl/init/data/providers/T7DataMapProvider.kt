@@ -19,7 +19,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
   override fun gather(lookupProvider: HolderLookup.Provider) {
     AspectRelations.gather(this)
 
-    ItemAspects.gather(this, lookupProvider)
+    BlockAndItemAspects.gather(this, lookupProvider)
     EntityAspects.gather(this, lookupProvider)
     MineralAspects.gather(this, lookupProvider)
     ToolAspects.gather(this, lookupProvider)
