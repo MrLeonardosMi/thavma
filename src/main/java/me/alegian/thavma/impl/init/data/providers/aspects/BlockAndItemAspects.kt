@@ -22,20 +22,20 @@ object BlockAndItemAspects {
   val netherPlanks = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.IGNIS, 2) }
   val bambooMosaic = AspectGen().mutate { it.add(Aspects.HERBA, 2) }
   val mudBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.HERBA, 2) }
-  val andesite = cobblestone.mutate { it }
-  val polishedAndesite = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
-  val blackstone = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.IGNIS, 2) }
-  val polishedBlackstone = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.IGNIS, 2) }
-  val polishedBlackstoneBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.IGNIS, 2) }
+  val andesite = stone.mutate { it }
+  val polishedAndesite = andesite.mutate { it }
+  val blackstone = stone.mutate { it.add(Aspects.IGNIS, 2) }
+  val polishedBlackstone = blackstone.mutate { it }
+  val polishedBlackstoneBricks = polishedBlackstone.mutate { it }
   val bricks = brick.mutate(Mutations.STORAGE_BLOCK_4)
   val endStoneBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.TENEBRAE, 2) }
   val mossyStoneBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.HERBA, 2) }
   val mossyCobblestone = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.HERBA, 2) }
-  val diorite = cobblestone.mutate { it }
+  val diorite = stone.mutate { it }
   val polishedDiorite = diorite.mutate { it }
-  val granite = cobblestone.mutate { it }
+  val granite = stone.mutate { it }
   val polishedGranite = granite.mutate { it }
-  val tuff = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
+  val tuff = stone.mutate { it }
   val polishedTuff = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
   val tuffBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
   val netherBricks = AspectGen().mutate { it.add(Aspects.TERRA, 4).add(Aspects.IGNIS, 4) }
@@ -46,22 +46,21 @@ object BlockAndItemAspects {
   val prismarineBricks = AspectGen().mutate { it.add(Aspects.AQUA, 8).add(Aspects.TERRA, 8) }
   val darkPrismarine = AspectGen().mutate { it.add(Aspects.AQUA, 4).add(Aspects.TERRA, 4) }
   val smoothQuartz = MineralAspects.quartzBlock.mutate { it }
-  val sandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
+  val sandstone = sand.mutate(Mutations.STORAGE_BLOCK_4)
   val cutSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
   val smoothSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
-  val redSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
-  val cutRedSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
-  val smoothRedSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
   val stoneBrick = stone.mutate { it }
-  val deepslate = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
+  val deepslate = stone.mutate { it }
   val cobbledDeepslate = deepslate.mutate { it }
   val polishedDeepslate = deepslate.mutate { it }
   val deepslateBricks = deepslate.mutate { it }
   val deepslateTiles = deepslate.mutate { it }
-  val elementalStone = AspectGen().mutate { it.add(Aspects.TERRA, 4).add(Aspects.AETHER, 1) }
+  val elementalStone = stone.mutate { it.scale(2).add(Aspects.AETHER, 1) }
   val leather = AspectGen().mutate { it.add(Aspects.CORPUS, 3) }
   val fabric = AspectGen().mutate { it.add(Aspects.FABRICO, 4).add(Aspects.AETHER, 1) }
-  val arcaneLens = AspectGen().mutate { it.add(Aspects.METALLUM, 16).add(Aspects.AETHER, 2).add(Aspects.VITREUS, 2) }
+  val glassPanes = AspectGen().mutate { it.add(Aspects.VITREUS, 1) }
+  val glassBlocksCheap = glassPanes.mutate { it.scale(2) }
+  val arcaneLens = MineralAspects.gold.mutate { it.scale(4).add(Aspects.AETHER, 4) }.add(glassPanes)
   val armadilloScute = AspectGen().mutate { it.add(Aspects.CORPUS, 2).add(Aspects.PRAEMUNIO, 1) }
   val turtleScute = AspectGen().mutate { it.add(Aspects.CORPUS, 2).add(Aspects.PRAEMUNIO, 1).add(Aspects.AQUA, 1) }
   val blazePowder = AspectGen().mutate { it.add(Aspects.IGNIS, 2).add(Aspects.ALKIMIA, 1) }
@@ -99,7 +98,6 @@ object BlockAndItemAspects {
   val mud = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.AQUA, 1) }
   val packedMud = mud.add(cropsWheat)
   val coarseDirt = dirt.add(gravel).mutate { it.scale(0.5) }
-  val cobblestones = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
   val clay = clayBall.mutate(Mutations.STORAGE_BLOCK_4)
   val grassBlock = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.HERBA, 1) }
   val podzol = grassBlock.mutate { it }
@@ -112,10 +110,8 @@ object BlockAndItemAspects {
   val logs = AspectGen().mutate { it.add(Aspects.HERBA, 8) }
   val flowers = AspectGen().mutate { it.add(Aspects.HERBA, 4).add(Aspects.VICTUS, 1) }
   val sugarCane = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.AQUA, 1) }
-  val table = AspectGen().mutate { it.add(Aspects.HERBA, 12) }
+  val table = woodenPlanks.mutate { it.scale(5.5) }
   val researchTable = AspectGen().mutate { it.add(Aspects.HERBA, 12).add(Aspects.AETHER, 2) }
-  val glassBlocksCheap = AspectGen().mutate { it.add(Aspects.VITREUS, 2) }
-  val glassPanes = AspectGen().mutate { it.add(Aspects.VITREUS, 1) }
   val wool = AspectGen().mutate { it.add(Aspects.CORPUS, 2).add(Aspects.FABRICO, 4) }
   val torch = AspectGen().mutate { it.add(Aspects.LUX, 4) }
   val snow = AspectGen().mutate { it.add(Aspects.AQUA, 1) }
@@ -123,8 +119,8 @@ object BlockAndItemAspects {
   val powderSnow = snow.mutate { it.scale(2) }
   val bedrock = AspectGen().mutate { it.add(Aspects.TERRA, 25).add(Aspects.TENEBRAE, 25) }
   val eternalFlame = AspectGen().mutate { it.add(Aspects.LUX, 12).add(Aspects.IGNIS, 8) }
-  val crackedElementalStone = AspectGen().mutate { it.add(Aspects.TERRA, 4).add(Aspects.AETHER, 1) }
-  val elementalStoneBricks = AspectGen().mutate { it.add(Aspects.TERRA, 4).add(Aspects.AETHER, 1) }
+  val crackedElementalStone = elementalStone.mutate { it }
+  val elementalStoneBricks = elementalStone.mutate { it }
   val elementalCore = AspectGen().mutate { it.add(Aspects.TERRA, 6).add(Aspects.AETHER, 2) }
   val craftingTable = AspectGen().mutate { it.add(Aspects.FABRICO, 8).add(Aspects.HERBA, 4) }
   val arcaneWorkbench = craftingTable.mutate { it.add(Aspects.AETHER, 2) }
@@ -184,7 +180,7 @@ object BlockAndItemAspects {
       coarseDirt.save(this, Blocks.COARSE_DIRT)
       gravel.save(this, Tags.Items.GRAVELS)
       stone.save(this, Tags.Items.STONES)
-      cobblestones.save(this, Tags.Items.COBBLESTONES)
+      cobblestone.save(this, Tags.Items.COBBLESTONES)
       sand.save(this, Tags.Items.SANDS)
       clay.save(this, Blocks.CLAY)
       grassBlock.save(this, Blocks.GRASS_BLOCK)

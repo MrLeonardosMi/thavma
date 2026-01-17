@@ -257,10 +257,10 @@
       "thavma:fabrico": 4
     },
     "#thavma:goggles": {
-      "thavma:aether": 4,
+      "thavma:aether": 8,
       "thavma:instrumentum": 8,
       "thavma:metallum": 40,
-      "thavma:vitreus": 4
+      "thavma:vitreus": 2
     },
     "minecraft:acacia_button": {
       "thavma:herba": 2
@@ -496,10 +496,10 @@
       "thavma:vitreus": 16
     },
     "minecraft:chiseled_red_sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:chiseled_sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:chiseled_stone_bricks": {
       "thavma:terra": 2
@@ -1407,32 +1407,32 @@
       "thavma:terra": 2
     },
     "minecraft:red_sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:red_sandstone_slab": {
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "minecraft:red_sandstone_stairs": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:red_sandstone_wall": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:rotten_flesh": {
       "thavma:corpus": 2,
       "thavma:hostilis": 2
     },
     "minecraft:sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:sandstone_slab": {
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "minecraft:sandstone_stairs": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:sandstone_wall": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:short_grass": {
       "thavma:herba": 1
@@ -1801,9 +1801,9 @@
       "thavma:aqua": 4
     },
     "thavma:arcane_lens": {
-      "thavma:aether": 2,
+      "thavma:aether": 4,
       "thavma:metallum": 16,
-      "thavma:vitreus": 2
+      "thavma:vitreus": 1
     },
     "thavma:arcane_workbench": {
       "thavma:aether": 2,
@@ -1897,7 +1897,7 @@
       "thavma:vitreus": 4
     },
     "thavma:table": {
-      "thavma:herba": 12
+      "thavma:herba": 11
     },
     "thavma:terra_infused_deepslate": {
       "thavma:terra": 4

@@ -118,7 +118,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       T7Items.APPRENTICE_BOOTS,
     )
 
-    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, T7Blocks.ELEMENTAL_STONE_BRICKS)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, T7Blocks.ELEMENTAL_STONE_BRICKS, 4)
       .define('s', T7Blocks.ELEMENTAL_STONE)
       .pattern("ss")
       .pattern("ss")
