@@ -18,9 +18,12 @@ object BlockAndItemAspects {
   val gravel = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
   val sand = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
   val brick = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.IGNIS, 1) }
-  val woodenPlanks = AspectGen().mutate { it.add(Aspects.HERBA, 2) }
-  val netherPlanks = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.IGNIS, 2) }
-  val bambooMosaic = AspectGen().mutate { it.add(Aspects.HERBA, 2) }
+  val rodsWooden = AspectGen().mutate { it.add(Aspects.HERBA, 1) }
+  val woodenPlanks = rodsWooden.mutate { it.scale(2) }
+  val netherPlanks = woodenPlanks.mutate { it.add(Aspects.IGNIS, 2) }
+  val bambooMosaic = woodenPlanks.mutate { it }
+  val inkSac = AspectGen().mutate { it.add(Aspects.AQUA, 2).add(Aspects.CORPUS, 2) }
+  val glowInkSac = inkSac.mutate { it.add(Aspects.LUX, 2) }
   val mudBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.HERBA, 2) }
   val andesite = stone.mutate { it }
   val polishedAndesite = andesite.mutate { it }
@@ -28,28 +31,36 @@ object BlockAndItemAspects {
   val polishedBlackstone = blackstone.mutate { it }
   val polishedBlackstoneBricks = polishedBlackstone.mutate { it }
   val bricks = brick.mutate(Mutations.STORAGE_BLOCK_4)
-  val endStoneBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.TENEBRAE, 2) }
-  val mossyStoneBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.HERBA, 2) }
-  val mossyCobblestone = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.HERBA, 2) }
+  val endStone = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.TENEBRAE, 2) }
+  val endStoneBricks = endStone.mutate { it }
+  val stoneBrick = stone.mutate { it }
+  val mossyStoneBricks = stoneBrick.mutate { it.add(Aspects.HERBA, 1) }
+  val mossyCobblestone = cobblestone.mutate { it.add(Aspects.HERBA, 1) }
   val diorite = stone.mutate { it }
   val polishedDiorite = diorite.mutate { it }
   val granite = stone.mutate { it }
   val polishedGranite = granite.mutate { it }
   val tuff = stone.mutate { it }
-  val polishedTuff = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
-  val tuffBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2) }
-  val netherBricks = AspectGen().mutate { it.add(Aspects.TERRA, 4).add(Aspects.IGNIS, 4) }
-  val redNetherBricks = AspectGen().mutate { it.add(Aspects.TERRA, 2).add(Aspects.IGNIS, 2).add(Aspects.HERBA, 2) }
-  val prismarine = AspectGen().mutate { it.add(Aspects.AQUA, 4).add(Aspects.TERRA, 4) }
-  val poppedChorusFruit = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.TENEBRAE, 2) }
+  val polishedTuff = tuff.mutate { it }
+  val tuffBricks = tuff.mutate { it }
+  val netherrack = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.IGNIS, 1) }
+  val netherBrick = netherrack.mutate { it }
+  val netherBricks = netherBrick.mutate(Mutations.STORAGE_BLOCK_4)
+  val netherWart = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.IGNIS, 2) }
+  val redNetherBricks = netherBrick.mutate { it.scale(2) }.add(netherWart.mutate { it.scale(2) })
+  val prismarineCrystals = AspectGen().mutate { it.add(Aspects.VITREUS, 2).add(Aspects.AQUA, 1).add(Aspects.LUX, 1) }
+  val prismarineShard = AspectGen().mutate { it.add(Aspects.AQUA, 1).add(Aspects.TERRA, 1) }
+  val prismarine = prismarineShard.mutate(Mutations.STORAGE_BLOCK_4)
+  val chorusFruit = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.TENEBRAE, 2) }
+  val poppedChorusFruit = chorusFruit.mutate { it }
   val purpur = poppedChorusFruit.mutate { it }
-  val prismarineBricks = AspectGen().mutate { it.add(Aspects.AQUA, 8).add(Aspects.TERRA, 8) }
-  val darkPrismarine = AspectGen().mutate { it.add(Aspects.AQUA, 4).add(Aspects.TERRA, 4) }
+  val prismarineBricks = prismarineShard.mutate(Mutations.STORAGE_BLOCK_9)
+  val darkPrismarine = prismarineShard.mutate { it.scale(8) }.add(inkSac)
+  val seaLantern = prismarineCrystals.mutate { it.scale(5) }.add(prismarineBricks.mutate { it.scale(4) })
   val smoothQuartz = MineralAspects.quartzBlock.mutate { it }
   val sandstone = sand.mutate(Mutations.STORAGE_BLOCK_4)
   val cutSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
   val smoothSandstone = AspectGen().mutate { it.add(Aspects.TERRA, 4) }
-  val stoneBrick = stone.mutate { it }
   val deepslate = stone.mutate { it }
   val cobbledDeepslate = deepslate.mutate { it }
   val polishedDeepslate = deepslate.mutate { it }
@@ -57,7 +68,9 @@ object BlockAndItemAspects {
   val deepslateTiles = deepslate.mutate { it }
   val elementalStone = stone.mutate { it.scale(2).add(Aspects.AETHER, 1) }
   val leather = AspectGen().mutate { it.add(Aspects.CORPUS, 3) }
-  val fabric = AspectGen().mutate { it.add(Aspects.FABRICO, 4).add(Aspects.AETHER, 1) }
+  val string = AspectGen().mutate { it.add(Aspects.CORPUS, 1).add(Aspects.FABRICO, 1) }
+  val wool = string.mutate(Mutations.STORAGE_BLOCK_4)
+  val fabric = wool.mutate { it.remove(Aspects.CORPUS).add(Aspects.AETHER, 1) }
   val glassPanes = AspectGen().mutate { it.add(Aspects.VITREUS, 1) }
   val glassBlocksCheap = glassPanes.mutate { it.scale(2) }
   val arcaneLens = MineralAspects.gold.mutate { it.scale(4).add(Aspects.AETHER, 4) }.add(glassPanes)
@@ -69,32 +82,24 @@ object BlockAndItemAspects {
   val rodsBreeze = AspectGen().mutate { it.add(Aspects.AETHER, 6).add(Aspects.CORPUS, 2) }
   val windCharge = AspectGen().mutate { it.add(Aspects.ALKIMIA, 4).add(Aspects.AETHER, 4).add(Aspects.INSTRUMENTUM, 2) }
   val fireCharge = AspectGen().mutate { it.add(Aspects.ALKIMIA, 4).add(Aspects.IGNIS, 4).add(Aspects.INSTRUMENTUM, 2) }
-  val rottenBrain = AspectGen().mutate { it.add(Aspects.COGNITIO, 12).add(Aspects.HOSTILIS, 2).add(Aspects.CORPUS, 2) }
   val rottenFlesh = AspectGen().mutate { it.add(Aspects.HOSTILIS, 2).add(Aspects.CORPUS, 2) }
+  val rottenBrain = rottenFlesh.mutate { it.add(Aspects.COGNITIO, 12) }
   val flint = AspectGen().mutate { it.add(Aspects.TERRA, 4).add(Aspects.INSTRUMENTUM, 2) }
   val feathers = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 1).add(Aspects.CORPUS, 2) }
   val enderPearls = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 4).add(Aspects.TENEBRAE, 4).add(Aspects.CORPUS, 2) }
   val enderEye = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 4).add(Aspects.TENEBRAE, 4).add(Aspects.AETHER, 2) }
-  val strings = AspectGen().mutate { it.add(Aspects.CORPUS, 1).add(Aspects.FABRICO, 1) }
   val ghastTear = AspectGen().mutate { it.add(Aspects.HOSTILIS, 4).add(Aspects.ALKIMIA, 4) }
   val sugar = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.VICTUS, 1) }
   val paper = AspectGen().mutate { it.add(Aspects.COGNITIO, 1).add(Aspects.HERBA, 1) }
   val fireworkRocket = AspectGen().mutate { it.add(Aspects.IGNIS, 1).add(Aspects.ORNATUS, 1) }
   val fireworkStar = AspectGen().mutate { it.add(Aspects.IGNIS, 1).add(Aspects.ORNATUS, 2) }
   val snowball = AspectGen().mutate { it.add(Aspects.AQUA, 1) }
-  val netherBrick = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.IGNIS, 1) }
-  val prismarineCrystals = AspectGen().mutate { it.add(Aspects.VITREUS, 4).add(Aspects.AQUA, 4).add(Aspects.LUX, 2) }
-  val prismarineShard = AspectGen().mutate { it.add(Aspects.AQUA, 2).add(Aspects.TERRA, 2) }
-  val chorusFruit = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.TENEBRAE, 2) }
   val clayBall = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.AQUA, 1) }
-  val rodsWooden = AspectGen().mutate { it.add(Aspects.HERBA, 2) }
   val eggs = AspectGen().mutate { it.add(Aspects.VICTUS, 4).add(Aspects.CORPUS, 2) }
   val cropsWheat = AspectGen().mutate { it.add(Aspects.VICTUS, 2).add(Aspects.HERBA, 2) }
-  val endCrystal = AspectGen().mutate { it.add(Aspects.VITREUS, 14).add(Aspects.IGNIS, 8).add(Aspects.TENEBRAE, 4).add(Aspects.AETHER, 4) }
-  val netherWart = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.IGNIS, 2) }
+  val endCrystal = glassBlocksCheap.mutate { it.scale(7) }.add(enderEye).add(ghastTear)
   val chorusPlant = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.TENEBRAE, 2) }
-  val chorusFlower = AspectGen().mutate { it.add(Aspects.HERBA, 4).add(Aspects.TENEBRAE, 4) }
-  val netherracks = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.IGNIS, 1) }
+  val chorusFlower = chorusPlant.mutate { it.scale(2) }
   val mud = AspectGen().mutate { it.add(Aspects.TERRA, 1).add(Aspects.AQUA, 1) }
   val packedMud = mud.add(cropsWheat)
   val coarseDirt = dirt.add(gravel).mutate { it.scale(0.5) }
@@ -110,28 +115,27 @@ object BlockAndItemAspects {
   val logs = AspectGen().mutate { it.add(Aspects.HERBA, 8) }
   val flowers = AspectGen().mutate { it.add(Aspects.HERBA, 4).add(Aspects.VICTUS, 1) }
   val sugarCane = AspectGen().mutate { it.add(Aspects.HERBA, 2).add(Aspects.AQUA, 1) }
-  val table = woodenPlanks.mutate { it.scale(5.5) }
+  val table = woodenPlanks.mutate { it.scale(5.5).add(Aspects.FABRICO, 2) }
   val researchTable = AspectGen().mutate { it.add(Aspects.HERBA, 12).add(Aspects.AETHER, 2) }
-  val wool = AspectGen().mutate { it.add(Aspects.CORPUS, 2).add(Aspects.FABRICO, 4) }
   val torch = AspectGen().mutate { it.add(Aspects.LUX, 4) }
-  val snow = AspectGen().mutate { it.add(Aspects.AQUA, 1) }
-  val snowBlock = snow.mutate(Mutations.STORAGE_BLOCK_4)
-  val powderSnow = snow.mutate { it.scale(2) }
+  val snow = snowball.mutate { it }
+  val snowBlock = snowball.mutate(Mutations.STORAGE_BLOCK_4)
+  val powderSnow = snowball.mutate { it.scale(2) }
   val bedrock = AspectGen().mutate { it.add(Aspects.TERRA, 25).add(Aspects.TENEBRAE, 25) }
   val eternalFlame = AspectGen().mutate { it.add(Aspects.LUX, 12).add(Aspects.IGNIS, 8) }
   val crackedElementalStone = elementalStone.mutate { it }
   val elementalStoneBricks = elementalStone.mutate { it }
   val elementalCore = AspectGen().mutate { it.add(Aspects.TERRA, 6).add(Aspects.AETHER, 2) }
-  val craftingTable = AspectGen().mutate { it.add(Aspects.FABRICO, 8).add(Aspects.HERBA, 4) }
-  val arcaneWorkbench = craftingTable.mutate { it.add(Aspects.AETHER, 2) }
+  val craftingTable = woodenPlanks.mutate { it.scale(4).add(Aspects.FABRICO, 4) }
+  val arcaneWorkbench = craftingTable.mutate { it.add(Aspects.AETHER, 2).add(Aspects.FABRICO, 4) }
   val cauldron = MineralAspects.iron.mutate { it.scale(7).add(Aspects.ALKIMIA, 8) }
   val crucible = cauldron.mutate { it.add(Aspects.AETHER, 2) }
   val sealingJar = AspectGen().mutate { it.add(Aspects.VITREUS, 4).add(Aspects.ALKIMIA, 2).add(Aspects.AETHER, 2) }
-  val tnt = AspectGen().mutate { it.add(Aspects.ALKIMIA, 8).add(Aspects.IGNIS, 8).add(Aspects.TERRA, 1) }
+  val tnt = gunpowders.mutate { it.scale(5) }.add(sand.mutate { it.scale(4) })
   val tripwireHook = AspectGen().mutate { it.add(Aspects.MACHINA, 2).add(Aspects.METALLUM, 1) }
   val heavyCore = AspectGen().mutate { it.add(Aspects.METALLUM, 16).add(Aspects.INSTRUMENTUM, 6) }
-  val bamboo = AspectGen().mutate { it.add(Aspects.HERBA, 1) }
-  val bambooBlocks = AspectGen().mutate { it.add(Aspects.HERBA, 4) }
+  val bamboo = rodsWooden.mutate { it }
+  val bambooBlocks = woodenPlanks.mutate { it.scale(2) }
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
@@ -152,7 +156,7 @@ object BlockAndItemAspects {
       feathers.save(this, Tags.Items.FEATHERS)
       enderPearls.save(this, Tags.Items.ENDER_PEARLS)
       enderEye.save(this, Items.ENDER_EYE)
-      strings.save(this, Tags.Items.STRINGS)
+      string.save(this, Tags.Items.STRINGS)
       ghastTear.save(this, Items.GHAST_TEAR)
       sugar.save(this, Items.SUGAR)
       paper.save(this, Items.PAPER)
@@ -173,7 +177,7 @@ object BlockAndItemAspects {
       netherWart.save(this, Blocks.NETHER_WART)
       chorusPlant.save(this, Blocks.CHORUS_PLANT)
       chorusFlower.save(this, Blocks.CHORUS_FLOWER)
-      netherracks.save(this, Tags.Items.NETHERRACKS)
+      netherrack.save(this, Tags.Items.NETHERRACKS)
       mud.save(this, Blocks.MUD)
       packedMud.save(this, Blocks.PACKED_MUD)
       dirt.save(this, ItemTags.DIRT)
@@ -219,6 +223,9 @@ object BlockAndItemAspects {
       heavyCore.save(this, Blocks.HEAVY_CORE)
       bamboo.save(this, Blocks.BAMBOO)
       bambooBlocks.save(this, ItemTags.BAMBOO_BLOCKS)
+      inkSac.save(this, Items.INK_SAC)
+      glowInkSac.save(this, Items.GLOW_INK_SAC)
+      seaLantern.save(this, Items.SEA_LANTERN)
     }
   }
 }

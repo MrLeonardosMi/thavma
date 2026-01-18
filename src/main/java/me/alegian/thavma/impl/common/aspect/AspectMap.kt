@@ -56,6 +56,12 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return builder.build()
   }
 
+  fun remove(aspectHolder: Holder<Aspect>): AspectMap {
+    val builder = builder().copyOf(this)
+    builder.remove(aspectHolder.value())
+    return builder.build()
+  }
+
   fun scale(multiplier: Number): AspectMap {
     return builder().copyOf(this).scale(multiplier).build()
   }
@@ -143,6 +149,11 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
     fun subtract(aspectStack: AspectStack): Builder {
       return this.subtract(aspectStack.aspect, aspectStack.amount)
+    }
+
+    fun remove(aspect: Aspect): Builder {
+      map.remove(aspect)
+      return this
     }
 
     fun scale(multiplier: Number): Builder {
