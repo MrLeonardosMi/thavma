@@ -58,11 +58,11 @@ object ToolAspects {
   val orichalcumPlating = MineralAspects.orichalcum.mutate(Mutations.PLATING)
   val thavmitePlating = MineralAspects.thavmite.mutate(Mutations.PLATING)
 
-  val arrows = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 2) }
-  val mace = AspectGen().mutate { it.add(Aspects.METALLUM, 16).add(Aspects.AETHER, 8) }
+  val arrows = BlockAndItemAspects.rodsWooden.add(BlockAndItemAspects.flint).add(BlockAndItemAspects.feathers).mutate { it.remove(Aspects.CORPUS) }
+  val mace = BlockAndItemAspects.heavyCore.add(BlockAndItemAspects.rodsBreeze).mutate { it.remove(Aspects.CORPUS) }
   val trident = AspectGen().mutate { it.add(Aspects.METALLUM, 12).add(Aspects.AQUA, 8) }
-  val bow = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 8).add(Aspects.HERBA, 2).add(Aspects.FABRICO, 2) }
-  val crossbow = AspectGen().mutate { it.add(Aspects.INSTRUMENTUM, 8).add(Aspects.METALLUM, 4).add(Aspects.FABRICO, 2) }
+  val bow = BlockAndItemAspects.rodsWooden.mutate { it.scale(3) }.add(BlockAndItemAspects.string.mutate { it.scale(3) }).mutate { it.add(Aspects.INSTRUMENTUM, 8).remove(Aspects.CORPUS) }
+  val crossbow = BlockAndItemAspects.rodsWooden.mutate { it.scale(3) }.add(BlockAndItemAspects.string.mutate { it.scale(2) }).add(BlockAndItemAspects.tripwireHook).add(MineralAspects.iron).mutate { it.add(Aspects.INSTRUMENTUM, 8).remove(Aspects.CORPUS) }
   val totemOfUndying = AspectGen().mutate { it.add(Aspects.VICTUS, 16).add(Aspects.AETHER, 8) }
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {

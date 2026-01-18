@@ -4,12 +4,11 @@
       "thavma:terra": 2
     },
     "#c:concrete_powders": {
-      "thavma:terra": 3
+      "thavma:terra": 2
     },
     "#c:concretes": {
-      "thavma:aether": 1,
       "thavma:aqua": 1,
-      "thavma:terra": 3
+      "thavma:terra": 2
     },
     "#c:crops/wheat": {
       "thavma:herba": 2,
@@ -211,17 +210,21 @@
       "thavma:fabrico": 1
     },
     "#c:tools/bow": {
-      "thavma:fabrico": 2,
-      "thavma:herba": 2,
+      "thavma:fabrico": 3,
+      "thavma:herba": 3,
       "thavma:instrumentum": 8
     },
     "#c:tools/crossbow": {
       "thavma:fabrico": 2,
+      "thavma:herba": 5,
       "thavma:instrumentum": 8,
-      "thavma:metallum": 4
+      "thavma:machina": 2,
+      "thavma:metallum": 12
     },
     "#minecraft:arrows": {
-      "thavma:instrumentum": 2
+      "thavma:herba": 1,
+      "thavma:instrumentum": 2,
+      "thavma:terra": 1
     },
     "#minecraft:bamboo_blocks": {
       "thavma:herba": 4
@@ -631,16 +634,16 @@
       "thavma:metallum": 36
     },
     "minecraft:cut_red_sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:cut_red_sandstone_slab": {
-      "thavma:terra": 2
-    },
-    "minecraft:cut_sandstone": {
       "thavma:terra": 4
     },
+    "minecraft:cut_sandstone": {
+      "thavma:terra": 8
+    },
     "minecraft:cut_sandstone_slab": {
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "minecraft:dark_oak_button": {
       "thavma:herba": 2
@@ -773,8 +776,9 @@
     },
     "minecraft:end_crystal": {
       "thavma:aether": 2,
-      "thavma:alkimia": 4,
+      "thavma:alkimia": 5,
       "thavma:hostilis": 4,
+      "thavma:ignis": 2,
       "thavma:instrumentum": 4,
       "thavma:tenebrae": 4,
       "thavma:vitreus": 14
@@ -797,6 +801,8 @@
     },
     "minecraft:ender_eye": {
       "thavma:aether": 2,
+      "thavma:alkimia": 1,
+      "thavma:ignis": 2,
       "thavma:instrumentum": 4,
       "thavma:tenebrae": 4
     },
@@ -829,8 +835,8 @@
       "thavma:ornatus": 2
     },
     "minecraft:flint": {
-      "thavma:instrumentum": 2,
-      "thavma:terra": 4
+      "thavma:instrumentum": 1,
+      "thavma:terra": 1
     },
     "minecraft:ghast_tear": {
       "thavma:alkimia": 4,
@@ -1010,7 +1016,8 @@
       "thavma:praemunio": 4
     },
     "minecraft:mace": {
-      "thavma:aether": 8,
+      "thavma:aether": 6,
+      "thavma:instrumentum": 6,
       "thavma:metallum": 16
     },
     "minecraft:mangrove_button": {
@@ -1075,22 +1082,21 @@
     },
     "minecraft:mud": {
       "thavma:aqua": 1,
-      "thavma:terra": 1
+      "thavma:terra": 2
     },
     "minecraft:mud_brick_slab": {
-      "thavma:herba": 1,
       "thavma:terra": 1
     },
     "minecraft:mud_brick_stairs": {
-      "thavma:herba": 2,
+      "thavma:aqua": 1,
       "thavma:terra": 2
     },
     "minecraft:mud_brick_wall": {
-      "thavma:herba": 2,
+      "thavma:aqua": 1,
       "thavma:terra": 2
     },
     "minecraft:mud_bricks": {
-      "thavma:herba": 2,
+      "thavma:aqua": 1,
       "thavma:terra": 2
     },
     "minecraft:nether_brick": {
@@ -1228,7 +1234,7 @@
     "minecraft:packed_mud": {
       "thavma:aqua": 1,
       "thavma:herba": 2,
-      "thavma:terra": 1,
+      "thavma:terra": 2,
       "thavma:victus": 2
     },
     "minecraft:paper": {
@@ -1468,22 +1474,22 @@
       "thavma:vitreus": 16
     },
     "minecraft:smooth_red_sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:smooth_red_sandstone_slab": {
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "minecraft:smooth_red_sandstone_stairs": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:smooth_sandstone": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:smooth_sandstone_slab": {
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "minecraft:smooth_sandstone_stairs": {
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:snow": {
       "thavma:aqua": 1
@@ -1604,8 +1610,9 @@
       "thavma:metallum": 12
     },
     "minecraft:tripwire_hook": {
+      "thavma:herba": 2,
       "thavma:machina": 2,
-      "thavma:metallum": 1
+      "thavma:metallum": 4
     },
     "minecraft:tuff": {
       "thavma:terra": 2
