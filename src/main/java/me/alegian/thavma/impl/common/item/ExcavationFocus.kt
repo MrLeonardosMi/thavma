@@ -1,0 +1,53 @@
+package me.alegian.thavma.impl.common.item
+
+import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.common.level.Excavation
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ClipContext
+import net.minecraft.world.level.Level
+import net.minecraft.world.phys.HitResult
+
+class ExcavationFocus : Item(
+  Properties().stacksTo(1)
+) {
+  override fun getUseDuration(stack: ItemStack, entity: LivingEntity) = 72000
+
+  override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+    val stack = player.getItemInHand(usedHand)
+    if (stack.item !is WandItem || !hasEnoughAspects(stack)) InteractionResultHolder.pass(stack)
+
+    player.startUsingItem(usedHand)
+    return InteractionResultHolder.consume(stack)
+  }
+
+  override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
+    if (level.gameTime % 10 != 0L || level.isClientSide) return
+
+    if (!hasEnoughAspects(stack)) return livingEntity.releaseUsingItem()
+
+    AspectContainer.from(stack)?.extract(aspectCost)
+    advanceBlockBreak(level, livingEntity)
+  }
+
+  private fun advanceBlockBreak(level: Level, livingEntity: LivingEntity) {
+    val from = livingEntity.eyePosition
+    val to = from.add(livingEntity.getViewVector(0f).scale(RANGE))
+    val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, livingEntity))
+    if (hitresult.type != HitResult.Type.MISS)
+      Excavation.excavate(level, livingEntity, hitresult.blockPos, 2)
+  }
+
+  private fun hasEnoughAspects(stack: ItemStack) =
+    AspectContainer.from(stack)?.aspects?.contains(aspectCost) ?: false
+
+  companion object {
+    val RANGE = 10.0
+    val aspectCost = AspectMap.builder().build()
+  }
+}

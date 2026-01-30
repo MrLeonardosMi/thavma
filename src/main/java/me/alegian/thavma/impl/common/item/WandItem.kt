@@ -12,7 +12,6 @@ import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
-import me.alegian.thavma.impl.rl
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -21,7 +20,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -32,15 +30,9 @@ import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
-import software.bernie.geckolib.GeckoLibServices
 import software.bernie.geckolib.animatable.GeoItem
 import software.bernie.geckolib.animatable.client.GeoRenderProvider
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.animation.AnimatableManager
-import software.bernie.geckolib.animation.AnimationController
-import software.bernie.geckolib.animation.PlayState
-import software.bernie.geckolib.animation.RawAnimation
-import software.bernie.geckolib.network.packet.SingletonAnimTriggerPacket
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
@@ -125,6 +117,11 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return super.use(level, player, usedHand)
   }
 
+  override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
+    stack.equippedFocus?.item?.onUseTick(level, livingEntity, stack, remainingUseDuration)
+    super.onUseTick(level, livingEntity, stack, remainingUseDuration)
+  }
+
   override fun interactLivingEntity(stack: ItemStack, player: Player, interactionTarget: LivingEntity, usedHand: InteractionHand): InteractionResult {
     val focusResult = stack.equippedFocus?.item?.interactLivingEntity(stack, player, interactionTarget, usedHand) ?: InteractionResult.PASS
     if (focusResult != InteractionResult.PASS) return focusResult
@@ -137,7 +134,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
   }
 
   override fun getUseDuration(pStack: ItemStack, pEntity: LivingEntity): Int {
-    return 72000
+    val focusDuration = pStack.equippedFocus?.item?.getUseDuration(pStack, pEntity)
+    return focusDuration ?: 72000
   }
 
   /**
