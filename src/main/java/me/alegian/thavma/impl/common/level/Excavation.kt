@@ -1,25 +1,39 @@
 package me.alegian.thavma.impl.common.level
 
 import net.minecraft.core.BlockPos
-import net.minecraft.world.entity.LivingEntity
+import net.minecraft.network.protocol.game.ClientboundLevelEventPacket
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
 
 object Excavation {
-  private val instances = mutableMapOf<Int, MutableMap<BlockPos, BlockStateProgress>>()
+  private val instances = mutableMapOf<Int, ExcavationProgress>()
 
-  fun excavate(level: Level, entity: LivingEntity, blockPos: BlockPos, speed: Int) {
-    if (level.isClientSide) return
+  fun excavate(level: Level, player: Player, blockPos: BlockPos, speed: Int) {
+    if (level.isClientSide || player !is ServerPlayer) return
     val blockState = level.getBlockState(blockPos)
 
-    val locations = instances.compute(entity.id) { _, v -> v ?: mutableMapOf() } ?: return
-    val stateProgress = locations.compute(blockPos) { _, v ->
-      if (v == null || v.blockState != blockState) BlockStateProgress(blockState, speed)
-      else BlockStateProgress(blockState, (v.progress + speed).coerceIn(0, 10))
+    val progressObject = instances.compute(player.id) { _, v ->
+      if (v == null || v.blockPos != blockPos || v.blockState != blockState)
+        ExcavationProgress(blockPos, blockState, speed)
+      else
+        ExcavationProgress(blockPos, blockState, (v.progress + speed).coerceIn(0, 10))
     } ?: return
 
-    level.destroyBlockProgress(-entity.id, blockPos, stateProgress.progress)
+    level.destroyBlockProgress(-player.id, blockPos, progressObject.progress)
+
+    if (progressObject.progress < 10) return
+    player.gameMode.destroyBlock(blockPos)
+    // due to the internals of the previous function, we need to separately send sound to the breaking player
+    player.connection.send(ClientboundLevelEventPacket(LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState), false))
   }
 }
 
-data class BlockStateProgress(val blockState: BlockState, val progress: Int)
+data class ExcavationProgress(
+  val blockPos: BlockPos,
+  val blockState: BlockState,
+  val progress: Int
+)

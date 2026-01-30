@@ -27,7 +27,11 @@ class ExcavationFocus : Item(
   }
 
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
-    if (level.gameTime % 10 != 0L || level.isClientSide) return
+    if (
+      level.gameTime % 5 != 0L ||
+      level.isClientSide ||
+      livingEntity !is Player
+    ) return
 
     if (!hasEnoughAspects(stack)) return livingEntity.releaseUsingItem()
 
@@ -35,12 +39,12 @@ class ExcavationFocus : Item(
     advanceBlockBreak(level, livingEntity)
   }
 
-  private fun advanceBlockBreak(level: Level, livingEntity: LivingEntity) {
-    val from = livingEntity.eyePosition
-    val to = from.add(livingEntity.getViewVector(0f).scale(RANGE))
-    val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, livingEntity))
+  private fun advanceBlockBreak(level: Level, player: Player) {
+    val from = player.eyePosition
+    val to = from.add(player.getViewVector(0f).scale(RANGE))
+    val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player))
     if (hitresult.type != HitResult.Type.MISS)
-      Excavation.excavate(level, livingEntity, hitresult.blockPos, 2)
+      Excavation.excavate(level, player, hitresult.blockPos, 4)
   }
 
   private fun hasEnoughAspects(stack: ItemStack) =
