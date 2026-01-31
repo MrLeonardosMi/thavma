@@ -2,25 +2,22 @@ package me.alegian.thavma.impl.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.common.level.Excavation
-import me.alegian.thavma.impl.common.util.toVec3
+import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
-import net.minecraft.core.BlockPos
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object ExcavationRenderer {
-  fun render(handPose: PoseStack, bufferSource: MultiBufferSource,partialTick: Float, gameTime: Long, targetBlockPos: BlockPos) {
+  fun render(handPose: PoseStack, bufferSource: MultiBufferSource,partialTick: Float, gameTime: Long, targetPos: Vector3f, handPos: Vector3f) {
     handPose.use {
-      translate(-0.5, 0.0, -0.5)
-
       val currentUp = Vector3f(0f, 1f, 0f)
-      val targetDir = Vector3f(targetBlockPos.toVec3().toVector3f()).normalize()
-      mulPose(Quaternionf().rotationTo(currentUp, targetDir))
+      val correctUp = handPose.last().pose().invert().transformPosition(targetPos-handPos).normalize()
+      mulPose(Quaternionf().rotationTo(currentUp, correctUp))
 
-      translate(0.0, 1.3, 0.1)
+      translate(-0.5, 0.0, -0.5)
       BeaconRenderer.renderBeaconBeam(
         handPose,
         bufferSource,
