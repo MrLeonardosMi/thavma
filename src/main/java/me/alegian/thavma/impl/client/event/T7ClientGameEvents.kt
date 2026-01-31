@@ -8,8 +8,8 @@ import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
 import me.alegian.thavma.impl.client.gui.foci.FociScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
-import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedAspectsComponents
+import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.ExcavationRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
@@ -29,7 +29,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.api.distmarker.Dist
@@ -142,10 +141,8 @@ private fun renderPlayerPost(event: RenderPlayerEvent.Pre) {
   val poseStack = event.poseStack
   poseStack.use {
     mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
-    val model = event.renderer.model
-    val arm = if (event.entity.mainArm == HumanoidArm.RIGHT) model.rightArm else model.leftArm
-    arm.translateAndRotate(poseStack)
-    translate(0.0, 0.0, 0.0)
+    translate(0.0, 19/16.0, 0.0)
+    event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
     ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime)
   }
 }
