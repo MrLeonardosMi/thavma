@@ -18,6 +18,7 @@ import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
 import me.alegian.thavma.impl.common.util.use
@@ -137,16 +138,6 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   }
 }
 
-private fun renderPlayerPost(event: RenderPlayerEvent.Pre) {
-  val poseStack = event.poseStack
-  poseStack.use {
-    mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
-    translate(0.0, 19/16.0, 0.0)
-    event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
-    ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime)
-  }
-}
-
 private var cooldownTicks = 0
 private fun clientTick(event: ClientTickEvent.Post) {
   cooldownTicks--
@@ -172,6 +163,6 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::jarTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
-  KFF_GAME_BUS.addListener(::renderPlayerPost)
+  KFF_GAME_BUS.addListener(Excavation::renderPlayerPre)
   KFF_GAME_BUS.addListener(::clientTick)
 }
