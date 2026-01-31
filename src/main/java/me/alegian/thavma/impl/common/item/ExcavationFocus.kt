@@ -41,7 +41,7 @@ class ExcavationFocus : Item(
 
   private fun advanceBlockBreak(level: Level, player: Player) {
     val from = player.eyePosition
-    val to = from.add(player.getViewVector(0f).scale(RANGE))
+    val to = from.add(player.getViewVector(0f).scale(Excavation.RANGE))
     val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player))
     if (hitresult.type != HitResult.Type.MISS)
       Excavation.excavate(level, player, hitresult.blockPos, 4)
@@ -51,7 +51,6 @@ class ExcavationFocus : Item(
     AspectContainer.from(stack)?.aspects?.contains(aspectCost) ?: false
 
   companion object {
-    val RANGE = 10.0
     val aspectCost = AspectMap.builder().build()
   }
 }

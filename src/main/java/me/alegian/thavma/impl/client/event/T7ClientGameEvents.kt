@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.event
 
 import com.mojang.datafixers.util.Either
+import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
 import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
@@ -10,6 +11,7 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedAspectsComponents
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
+import me.alegian.thavma.impl.client.renderer.ExcavationRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
@@ -18,6 +20,7 @@ import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
+import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -26,6 +29,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.api.distmarker.Dist
@@ -134,6 +138,18 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   }
 }
 
+private fun renderPlayerPost(event: RenderPlayerEvent.Pre) {
+  val poseStack = event.poseStack
+  poseStack.use {
+    mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
+    val model = event.renderer.model
+    val arm = if (event.entity.mainArm == HumanoidArm.RIGHT) model.rightArm else model.leftArm
+    arm.translateAndRotate(poseStack)
+    translate(0.0, 0.0, 0.0)
+    ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime)
+  }
+}
+
 private var cooldownTicks = 0
 private fun clientTick(event: ClientTickEvent.Post) {
   cooldownTicks--
@@ -159,5 +175,6 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::jarTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
+  KFF_GAME_BUS.addListener(::renderPlayerPost)
   KFF_GAME_BUS.addListener(::clientTick)
 }

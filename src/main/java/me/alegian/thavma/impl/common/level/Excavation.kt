@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
 
 object Excavation {
+  const val RANGE = 10.0
   private val instances = mutableMapOf<Int, ExcavationProgress>()
 
   fun excavate(level: Level, player: Player, blockPos: BlockPos, speed: Int) {
