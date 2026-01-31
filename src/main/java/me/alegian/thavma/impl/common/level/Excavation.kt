@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.common.level
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.renderer.ExcavationRenderer
 import me.alegian.thavma.impl.client.util.transformOrigin
+import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.plus
 import me.alegian.thavma.impl.common.util.toVec3
 import me.alegian.thavma.impl.common.util.use
@@ -48,9 +49,9 @@ object Excavation {
       translate(0.0, 19 / 16.0, 0.0)
       event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
 
-      val targetPos = instances[event.entity.id]?.blockPos?.toVec3()?.toVector3f() ?: return@use
-      val cameraPos = Minecraft.getInstance().gameRenderer.mainCamera.position.toVector3f()
-      val handPos = transformOrigin() + cameraPos
+      var targetPos = instances[event.entity.id]?.blockPos?.center?.toVector3f() ?: return@use
+      targetPos -= Minecraft.getInstance().gameRenderer.mainCamera.position.toVector3f()
+      val handPos = transformOrigin()
       ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, targetPos, handPos)
     }
   }
