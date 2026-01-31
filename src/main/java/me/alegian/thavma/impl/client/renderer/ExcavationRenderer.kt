@@ -24,8 +24,8 @@ object ExcavationRenderer {
         0,
         Excavation.RANGE.toInt(),
         Aspects.TERRA.get().color,
-        0.25f,
-        0.25f
+        0.3f,
+        0.3f
       )
     }
   }
