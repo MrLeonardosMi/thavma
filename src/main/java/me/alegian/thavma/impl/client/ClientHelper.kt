@@ -42,4 +42,5 @@ object ClientHelper {
   fun bufferSource() = Minecraft.getInstance().renderBuffers().bufferSource()
   fun entityRenderDispatcher() = Minecraft.getInstance().entityRenderDispatcher
   fun camera() = Minecraft.getInstance().gameRenderer.mainCamera
+  fun firstPerson() = Minecraft.getInstance().options.cameraType.isFirstPerson
 }
