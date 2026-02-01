@@ -3,10 +3,12 @@ package me.alegian.thavma.impl.client.renderer
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.util.transformOrigin
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
@@ -19,11 +21,10 @@ import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object ExcavationRenderer {
-  val renderers = mutableSetOf<Int>()
-
   fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
-    if (!renderers.contains(event.entity.id)) return
-    val hitPos = CachedHitResult.get(event.entity).hitResult.location.toVector3f()
+    if (event.entity.useItem.equippedFocus?.item != T7Items.FOCUS_EXCAVATION.get()) return
+
+    val hitPos = CachedHitResult.get(event.entity, event.partialTick).hitResult.location.toVector3f()
 
     val poseStack = event.poseStack
     poseStack.use {
@@ -71,12 +72,12 @@ object ExcavationRenderer {
     companion object {
       private val hitResults = mutableMapOf<Int, CachedHitResult>()
 
-      fun get(entity: Entity): CachedHitResult {
+      fun get(entity: Entity, partialTick: Float): CachedHitResult {
         val level = entity.level()
         val old = hitResults[entity.id]
         if (old == null || old.tick != level.gameTime) {
           val from = entity.eyePosition
-          val to = from.add(entity.getViewVector(0f).scale(Excavation.RANGE))
+          val to = from.add(entity.getViewVector(partialTick).scale(Excavation.RANGE))
           val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, entity))
           val newCache = CachedHitResult(level.gameTime, hitresult)
           hitResults[entity.id] = newCache
