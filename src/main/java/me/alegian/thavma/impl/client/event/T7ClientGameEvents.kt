@@ -160,6 +160,6 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::jarTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
-  KFF_GAME_BUS.addListener(ExcavationRenderer::renderPlayerPre)
+  KFF_GAME_BUS.addListener(ExcavationRenderer::renderLevelAfterEntities)
   KFF_GAME_BUS.addListener(::clientTick)
 }

@@ -2,7 +2,9 @@ package me.alegian.thavma.impl.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.util.transformOrigin
+import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.common.util.minus
@@ -12,28 +14,38 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
+import net.minecraft.client.renderer.entity.player.PlayerRenderer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.client.event.RenderPlayerEvent
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import org.joml.Matrix4f
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object ExcavationRenderer {
-  fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
-    if (event.entity.useItem.equippedFocus?.item != T7Items.FOCUS_EXCAVATION.get()) return
+  fun renderLevelAfterEntities(event: RenderLevelStageEvent) {
+    if (event.stage != RenderLevelStageEvent.Stage.AFTER_ENTITIES) return
+    val level = Minecraft.getInstance().level ?: return
+    val players = level.players()
+    val partialTick = event.partialTick.gameTimeDeltaTicks
 
-    val hitPos = CachedHitResult.get(event.entity, event.partialTick).hitResult.location.toVector3f()
+    for (player in players) {
+      if (player.useItem.equippedFocus?.item != T7Items.FOCUS_EXCAVATION.get()) return
+      val playerRenderer = ClientHelper.entityRenderDispatcher().getRenderer(player)
+      if (playerRenderer !is PlayerRenderer) return
 
-    val poseStack = event.poseStack
-    poseStack.use {
-      mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
-      // go to arm pivot point (hours of reverse engineering led to this constant)
-      translate(0.0, 19 / 16.0, 0.0)
-      event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
+      val hitPos = CachedHitResult.get(player, partialTick).hitResult.location.toVector3f()
 
-      render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, hitPos)
+      event.poseStack.use {
+        translate(player.position() - ClientHelper.camera().position)
+        mulPose(Axis.YP.rotationDegrees(-player.yBodyRot))
+        // go to arm pivot point (hours of reverse engineering led to this constant)
+        translate(0.0, 19 / 16.0, 0.0)
+        playerRenderer.model.translateToHand(player.mainArm, this)
+
+        render(event.poseStack, ClientHelper.bufferSource(), partialTick, player.level().gameTime, hitPos)
+      }
     }
   }
 
@@ -43,7 +55,7 @@ object ExcavationRenderer {
       translate(0.0, -0.6, 0.8)
 
       // rotate towards target block
-      val targetPos = hitPos - Minecraft.getInstance().gameRenderer.mainCamera.position.toVector3f()
+      val targetPos = hitPos - ClientHelper.camera().position.toVector3f()
       val wandTipPos = transformOrigin()
       val currentUp = Vector3f(0f, 1f, 0f)
       val localDiff = (targetPos - wandTipPos).mulDirection(handPose.last().pose().invert(Matrix4f()))

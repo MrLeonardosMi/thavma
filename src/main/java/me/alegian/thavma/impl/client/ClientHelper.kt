@@ -39,4 +39,7 @@ fun clientSound(sound: SoundEvent, source: SoundSource, volume: Float, pitch: Fl
 object ClientHelper {
   fun hitResult() = Minecraft.getInstance().hitResult
   fun player() = Minecraft.getInstance().player
+  fun bufferSource() = Minecraft.getInstance().renderBuffers().bufferSource()
+  fun entityRenderDispatcher() = Minecraft.getInstance().entityRenderDispatcher
+  fun camera() = Minecraft.getInstance().gameRenderer.mainCamera
 }
