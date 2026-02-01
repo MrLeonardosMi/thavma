@@ -156,11 +156,6 @@ private fun registerSpawnPlacements(event: RegisterSpawnPlacementsEvent) {
 private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
   val registrar = event.registrar("1")
   registrar.playToClient(
-    ExcavationPayload.TYPE,
-    ExcavationPayload.STREAM_CODEC,
-    ExcavationPayload::handle
-  )
-  registrar.playToClient(
     ScanResultPayload.TYPE,
     ScanResultPayload.STREAM_CODEC,
     ScanResultPayload::handle

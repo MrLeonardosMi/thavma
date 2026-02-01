@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.common.level
 
-import me.alegian.thavma.impl.common.payload.ExcavationPayload
 import net.minecraft.core.BlockPos
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket
 import net.minecraft.server.level.ServerPlayer
@@ -11,7 +10,6 @@ import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
-import net.neoforged.neoforge.network.PacketDistributor
 
 object Excavation {
   const val RANGE = 10.0
@@ -19,11 +17,7 @@ object Excavation {
 
   fun excavate(level: Level, player: Player, hitResult: BlockHitResult, speed: Int) {
     if (level.isClientSide || player !is ServerPlayer) return
-    // if we missed, just render the beam
-    if (hitResult.type == HitResult.Type.MISS){
-      PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, 0))
-      return
-    }
+    if (hitResult.type == HitResult.Type.MISS) return
 
     val blockPos = hitResult.blockPos
     val blockState = level.getBlockState(blockPos)
@@ -35,7 +29,7 @@ object Excavation {
         ExcavationProgress(blockPos, blockState, (v.progress + speed).coerceIn(0, 10))
     } ?: return
 
-    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, blockPos, progressObject.progress))
+    level.destroyBlockProgress(-player.id, blockPos, progressObject.progress)
 
     if (progressObject.progress < 10) return
     player.gameMode.destroyBlock(blockPos)
@@ -46,8 +40,6 @@ object Excavation {
   fun stopExcavation(level: Level, player: Player) {
     if (level.isClientSide) return
     instances.remove(player.id)
-    // todo: fix
-    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, 0))
   }
 }
 
