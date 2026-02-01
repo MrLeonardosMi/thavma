@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.use
@@ -8,23 +9,38 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
-import net.minecraft.core.BlockPos
+import net.minecraft.world.phys.Vec3
+import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import org.joml.Matrix4f
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object ExcavationRenderer {
-  fun render(handPose: PoseStack, bufferSource: MultiBufferSource,partialTick: Float, gameTime: Long, blockPos: BlockPos) {
+  val renderers = mutableMapOf<Int, Vec3>()
+
+  fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
+    val poseStack = event.poseStack
+    poseStack.use {
+      mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
+      // go to arm pivot point (hours of reverse engineering led to this constant)
+      translate(0.0, 19 / 16.0, 0.0)
+      event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
+
+      val hitPos = renderers[event.entity.id]?.toVector3f() ?: return@use
+      render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, hitPos)
+    }
+  }
+
+  fun render(handPose: PoseStack, bufferSource: MultiBufferSource, partialTick: Float, gameTime: Long, hitPos: Vector3f) {
     handPose.use {
       // go to the tip of the wand
       translate(0.0, -0.6, 0.8)
 
       // rotate towards target block
-      var targetPos = blockPos.center.toVector3f()
-      targetPos -= Minecraft.getInstance().gameRenderer.mainCamera.position.toVector3f()
+      val targetPos = hitPos - Minecraft.getInstance().gameRenderer.mainCamera.position.toVector3f()
       val wandTipPos = transformOrigin()
       val currentUp = Vector3f(0f, 1f, 0f)
-      val localDiff = (targetPos-wandTipPos).mulDirection(handPose.last().pose().invert(Matrix4f()))
+      val localDiff = (targetPos - wandTipPos).mulDirection(handPose.last().pose().invert(Matrix4f()))
       val correctUp = localDiff.normalize(Vector3f())
       mulPose(Quaternionf().rotationTo(currentUp, correctUp))
 

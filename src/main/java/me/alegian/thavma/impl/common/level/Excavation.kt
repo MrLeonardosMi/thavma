@@ -1,13 +1,6 @@
 package me.alegian.thavma.impl.common.level
 
-import com.mojang.math.Axis
-import me.alegian.thavma.impl.client.renderer.ExcavationRenderer
-import me.alegian.thavma.impl.client.util.transformOrigin
-import me.alegian.thavma.impl.common.util.minus
-import me.alegian.thavma.impl.common.util.plus
-import me.alegian.thavma.impl.common.util.toVec3
-import me.alegian.thavma.impl.common.util.use
-import net.minecraft.client.Minecraft
+import me.alegian.thavma.impl.common.payload.ExcavationPayload
 import net.minecraft.core.BlockPos
 import net.minecraft.network.protocol.game.ClientboundLevelEventPacket
 import net.minecraft.server.level.ServerPlayer
@@ -16,14 +9,24 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.client.event.RenderPlayerEvent
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
+import net.neoforged.neoforge.network.PacketDistributor
 
 object Excavation {
   const val RANGE = 10.0
   private val instances = mutableMapOf<Int, ExcavationProgress>()
 
-  fun excavate(level: Level, player: Player, blockPos: BlockPos, speed: Int) {
+  fun excavate(level: Level, player: Player, hitResult: BlockHitResult, speed: Int) {
     if (level.isClientSide || player !is ServerPlayer) return
+    val hitPos = hitResult.location
+    // if we missed, just render the beam
+    if (hitResult.type == HitResult.Type.MISS){
+      PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, hitPos, 0))
+      return
+    }
+
+    val blockPos = hitResult.blockPos
     val blockState = level.getBlockState(blockPos)
 
     val progressObject = instances.compute(player.id) { _, v ->
@@ -33,7 +36,7 @@ object Excavation {
         ExcavationProgress(blockPos, blockState, (v.progress + speed).coerceIn(0, 10))
     } ?: return
 
-    level.destroyBlockProgress(-player.id, blockPos, progressObject.progress)
+    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, blockPos, hitPos, progressObject.progress))
 
     if (progressObject.progress < 10) return
     player.gameMode.destroyBlock(blockPos)
@@ -44,19 +47,7 @@ object Excavation {
   fun stopExcavation(level: Level, player: Player) {
     if (level.isClientSide) return
     instances.remove(player.id)
-  }
-
-  fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
-    val poseStack = event.poseStack
-    poseStack.use {
-      mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
-      // go to arm pivot point (hours of reverse engineering led to this constant)
-      translate(0.0, 19 / 16.0, 0.0)
-      event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
-
-      val blockPos = instances[event.entity.id]?.blockPos ?: return@use
-      ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, blockPos)
-    }
+    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, null, 0))
   }
 }
 

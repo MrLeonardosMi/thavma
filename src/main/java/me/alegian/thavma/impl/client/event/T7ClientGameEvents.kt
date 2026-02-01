@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client.event
 
 import com.mojang.datafixers.util.Either
-import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
 import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
@@ -18,10 +17,8 @@ import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
-import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
-import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -163,6 +160,6 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::jarTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
-  KFF_GAME_BUS.addListener(Excavation::renderPlayerPre)
+  KFF_GAME_BUS.addListener(ExcavationRenderer::renderPlayerPre)
   KFF_GAME_BUS.addListener(::clientTick)
 }

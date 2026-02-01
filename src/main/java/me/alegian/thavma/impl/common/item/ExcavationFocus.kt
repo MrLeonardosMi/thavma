@@ -11,7 +11,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.HitResult
 
 class ExcavationFocus : Item(
   Properties().stacksTo(1)
@@ -51,8 +50,7 @@ class ExcavationFocus : Item(
     val from = player.eyePosition
     val to = from.add(player.getViewVector(0f).scale(Excavation.RANGE))
     val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player))
-    if (hitresult.type != HitResult.Type.MISS)
-      Excavation.excavate(level, player, hitresult.blockPos, 4)
+    Excavation.excavate(level, player, hitresult, 4)
   }
 
   private fun hasEnoughAspects(stack: ItemStack) =
