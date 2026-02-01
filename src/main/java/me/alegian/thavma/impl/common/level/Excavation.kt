@@ -41,18 +41,21 @@ object Excavation {
     player.connection.send(ClientboundLevelEventPacket(LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState), false))
   }
 
+  fun stopExcavation(level: Level, player: Player) {
+    if (level.isClientSide) return
+    instances.remove(player.id)
+  }
+
   fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
     val poseStack = event.poseStack
     poseStack.use {
       mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
-      // hours of reverse engineering led to this constant
+      // go to arm pivot point (hours of reverse engineering led to this constant)
       translate(0.0, 19 / 16.0, 0.0)
       event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
 
-      var targetPos = instances[event.entity.id]?.blockPos?.center?.toVector3f() ?: return@use
-      targetPos -= Minecraft.getInstance().gameRenderer.mainCamera.position.toVector3f()
-      val handPos = transformOrigin()
-      ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, targetPos, handPos)
+      val blockPos = instances[event.entity.id]?.blockPos ?: return@use
+      ExcavationRenderer.render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, blockPos)
     }
   }
 }

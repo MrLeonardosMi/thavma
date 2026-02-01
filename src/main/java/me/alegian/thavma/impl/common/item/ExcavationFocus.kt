@@ -39,6 +39,14 @@ class ExcavationFocus : Item(
     advanceBlockBreak(level, livingEntity)
   }
 
+  override fun releaseUsing(stack: ItemStack, level: Level, livingEntity: LivingEntity, timeCharged: Int) {
+    if (
+      level.isClientSide ||
+      livingEntity !is Player
+    ) return
+    Excavation.stopExcavation(level, livingEntity)
+  }
+
   private fun advanceBlockBreak(level: Level, player: Player) {
     val from = player.eyePosition
     val to = from.add(player.getViewVector(0f).scale(Excavation.RANGE))

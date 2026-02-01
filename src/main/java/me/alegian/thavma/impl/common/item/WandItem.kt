@@ -122,6 +122,11 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     super.onUseTick(level, livingEntity, stack, remainingUseDuration)
   }
 
+  override fun releaseUsing(stack: ItemStack, level: Level, livingEntity: LivingEntity, timeCharged: Int) {
+    stack.equippedFocus?.item?.releaseUsing(stack, level, livingEntity, timeCharged)
+    super.releaseUsing(stack, level, livingEntity, timeCharged)
+  }
+
   override fun interactLivingEntity(stack: ItemStack, player: Player, interactionTarget: LivingEntity, usedHand: InteractionHand): InteractionResult {
     val focusResult = stack.equippedFocus?.item?.interactLivingEntity(stack, player, interactionTarget, usedHand) ?: InteractionResult.PASS
     if (focusResult != InteractionResult.PASS) return focusResult
