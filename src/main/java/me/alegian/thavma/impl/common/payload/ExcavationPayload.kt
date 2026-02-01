@@ -15,7 +15,6 @@ import net.neoforged.neoforge.network.handling.IPayloadContext
 class ExcavationPayload(
   private val entityId: Int,
   private val blockPos: BlockPos?,
-  private val hitPos: Vec3?,
   private val progress: Int,
 ) : CustomPacketPayload {
   override fun type() = TYPE
@@ -28,15 +27,16 @@ class ExcavationPayload(
       ExcavationPayload::entityId,
       BlockPos.STREAM_CODEC.nullable(),
       ExcavationPayload::blockPos,
-      T7StreamCodecs.VEC3.nullable(),
-      ExcavationPayload::hitPos,
       ByteBufCodecs.INT,
       ExcavationPayload::progress,
       ::ExcavationPayload
     )
 
     fun handle(payload: ExcavationPayload, context: IPayloadContext) {
-      ExcavationRenderer.renderers.compute(payload.entityId) { _, _ -> payload.hitPos }
+      if (payload.progress > 0)
+        ExcavationRenderer.renderers.add(payload.entityId)
+      else
+        ExcavationRenderer.renderers.remove(payload.entityId)
       if (payload.blockPos != null)
         context.player().level().destroyBlockProgress(-payload.entityId, payload.blockPos, payload.progress)
     }

@@ -19,10 +19,9 @@ object Excavation {
 
   fun excavate(level: Level, player: Player, hitResult: BlockHitResult, speed: Int) {
     if (level.isClientSide || player !is ServerPlayer) return
-    val hitPos = hitResult.location
     // if we missed, just render the beam
     if (hitResult.type == HitResult.Type.MISS){
-      PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, hitPos, 0))
+      PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, 0))
       return
     }
 
@@ -36,7 +35,7 @@ object Excavation {
         ExcavationProgress(blockPos, blockState, (v.progress + speed).coerceIn(0, 10))
     } ?: return
 
-    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, blockPos, hitPos, progressObject.progress))
+    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, blockPos, progressObject.progress))
 
     if (progressObject.progress < 10) return
     player.gameMode.destroyBlock(blockPos)
@@ -47,7 +46,8 @@ object Excavation {
   fun stopExcavation(level: Level, player: Player) {
     if (level.isClientSide) return
     instances.remove(player.id)
-    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, null, 0))
+    // todo: fix
+    PacketDistributor.sendToAllPlayers(ExcavationPayload(player.id, null, 0))
   }
 }
 

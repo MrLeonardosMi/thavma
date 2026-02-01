@@ -3,22 +3,28 @@ package me.alegian.thavma.impl.client.renderer
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.util.transformOrigin
+import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
-import net.minecraft.world.phys.Vec3
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.ClipContext
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import org.joml.Matrix4f
 import org.joml.Quaternionf
 import org.joml.Vector3f
 
 object ExcavationRenderer {
-  val renderers = mutableMapOf<Int, Vec3>()
+  val renderers = mutableSetOf<Int>()
 
   fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
+    if (!renderers.contains(event.entity.id)) return
+    val hitPos = CachedHitResult.get(event.entity).hitResult.location.toVector3f()
+
     val poseStack = event.poseStack
     poseStack.use {
       mulPose(Axis.YP.rotationDegrees(-event.entity.yBodyRot))
@@ -26,7 +32,6 @@ object ExcavationRenderer {
       translate(0.0, 19 / 16.0, 0.0)
       event.renderer.model.translateToHand(event.entity.mainArm, poseStack)
 
-      val hitPos = renderers[event.entity.id]?.toVector3f() ?: return@use
       render(event.poseStack, event.multiBufferSource, event.partialTick, event.entity.level().gameTime, hitPos)
     }
   }
@@ -59,6 +64,26 @@ object ExcavationRenderer {
         0.3f,
         0.3f
       )
+    }
+  }
+
+  private data class CachedHitResult(val tick: Long, val hitResult: BlockHitResult) {
+    companion object {
+      private val hitResults = mutableMapOf<Int, CachedHitResult>()
+
+      fun get(entity: Entity): CachedHitResult {
+        val level = entity.level()
+        val old = hitResults[entity.id]
+        if (old == null || old.tick != level.gameTime) {
+          val from = entity.eyePosition
+          val to = from.add(entity.getViewVector(0f).scale(Excavation.RANGE))
+          val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, entity))
+          val newCache = CachedHitResult(level.gameTime, hitresult)
+          hitResults[entity.id] = newCache
+          return newCache
+        } else
+          return old
+      }
     }
   }
 }
